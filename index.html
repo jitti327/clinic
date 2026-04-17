@@ -1,0 +1,2186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aster MSK Clinic Suite</title>
+  <style>
+    :root {
+      --space-1: 8px;
+      --space-2: 16px;
+      --space-3: 24px;
+      --space-4: 32px;
+      --space-5: 40px;
+      --space-6: 48px;
+
+      --radius-s: 12px;
+      --radius-m: 14px;
+      --radius-l: 16px;
+      --radius-xl: 20px;
+
+      --bg: #f4f8fd;
+      --surface: #ffffff;
+      --surface-soft: #f8fbff;
+      --text: #0f172a;
+      --text-2: #334155;
+      --text-3: #64748b;
+      --primary: #2563eb;
+      --primary-2: #1d4ed8;
+      --accent: #0ea5a8;
+      --line-soft: #e4edf9;
+
+      --shadow-1: 0 4px 16px rgba(15, 23, 42, 0.05);
+      --shadow-2: 0 10px 24px rgba(15, 23, 42, 0.07);
+      --shadow-3: 0 20px 48px rgba(37, 99, 235, 0.12);
+      --ease: 220ms cubic-bezier(.2, .8, .2, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Inter, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 86% 12%, rgba(37,99,235,.08) 0 22%, transparent 55%),
+        radial-gradient(circle at 16% 88%, rgba(14,165,168,.06) 0 19%, transparent 56%),
+        var(--bg);
+      min-height: 100%;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: var(--space-2);
+      background: #fff;
+      border: 1px solid var(--line-soft);
+      border-radius: var(--radius-s);
+      padding: 10px 14px;
+      z-index: 100;
+    }
+
+    .skip-link:focus {
+      left: var(--space-2);
+      box-shadow: var(--shadow-2);
+    }
+
+    .app {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: var(--space-2);
+      display: grid;
+      gap: var(--space-2);
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar, .card, .topbar, .hero {
+      background: var(--surface);
+      border-radius: var(--radius-l);
+      box-shadow: var(--shadow-1);
+      border: 1px solid rgba(228, 237, 249, 0.85);
+    }
+
+    .sidebar {
+      padding: var(--space-2);
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: .82rem;
+      background: linear-gradient(135deg, #2563eb, #0ea5a8);
+      box-shadow: 0 10px 20px rgba(37, 99, 235, 0.28);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .brand p {
+      margin: 3px 0 0;
+      color: var(--text-3);
+      font-size: .78rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .tab {
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--text-2);
+      min-height: 44px;
+      padding: 10px 12px;
+      font: inherit;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all var(--ease);
+      white-space: nowrap;
+    }
+
+    .tab svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .tab[aria-selected="true"] {
+      background: #ecf3ff;
+      border-color: #caddfc;
+      color: var(--primary);
+    }
+
+    .sidebar-note {
+      border-radius: var(--radius-m);
+      border: 1px solid #d7e5fb;
+      background: linear-gradient(160deg, #f8fbff, #f1f7ff);
+      padding: 12px;
+      font-size: .82rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    .main {
+      display: grid;
+      gap: var(--space-2);
+      align-content: start;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: var(--space-3);
+      background:
+        radial-gradient(circle at 88% 12%, rgba(59,130,246,.18), transparent 45%),
+        radial-gradient(circle at 78% 98%, rgba(14,165,168,.14), transparent 50%),
+        linear-gradient(165deg, #fff, #f6faff);
+      box-shadow: var(--shadow-3);
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: var(--space-3);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .78rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: #1e40af;
+      background: #edf4ff;
+      border-radius: 999px;
+      padding: 7px 11px;
+      font-weight: 700;
+    }
+
+    .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--primary); }
+
+    .hero h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 6vw, 2.7rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      max-width: 18ch;
+    }
+
+    .hero p {
+      margin: 14px 0 0;
+      font-size: 1rem;
+      color: var(--text-2);
+      line-height: 1.65;
+      max-width: 56ch;
+    }
+
+    .hero-actions {
+      margin-top: var(--space-3);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      min-height: 44px;
+      border-radius: 12px;
+      border: 0;
+      font: inherit;
+      font-size: .92rem;
+      font-weight: 700;
+      padding: 0 14px;
+      cursor: pointer;
+      transition: all var(--ease);
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow: 0 12px 26px rgba(37, 99, 235, 0.28);
+    }
+
+    .btn-secondary {
+      color: #1e3a8a;
+      background: #fff;
+      border: 1px solid #d5e3f7;
+    }
+
+    .hero-metrics {
+      display: grid;
+      gap: 10px;
+    }
+
+    .hero-visual {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-m);
+      border: 1px solid #d6e4f8;
+      background: #fff;
+      box-shadow: var(--shadow-2);
+    }
+
+    .hero-visual img {
+      display: block;
+      width: 100%;
+      height: 178px;
+      object-fit: cover;
+    }
+
+    .hero-visual-badge {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid #d8e6fa;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: .76rem;
+      color: #1e3a8a;
+      font-weight: 700;
+      max-width: 90%;
+    }
+
+    .hero-tags {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid #d9e6f8;
+      background: #ffffffd9;
+      color: #1e3a8a;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .01em;
+    }
+
+    .mini-kpi {
+      border-radius: var(--radius-m);
+      background: rgba(255,255,255,.9);
+      border: 1px solid #d8e5f8;
+      padding: 12px;
+      box-shadow: var(--shadow-1);
+    }
+
+    .mini-kpi small {
+      display: block;
+      font-size: .76rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--text-3);
+      font-weight: 700;
+    }
+
+    .mini-kpi strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 1.22rem;
+    }
+
+    .topbar {
+      padding: 14px var(--space-2);
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .topbar h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: -0.01em;
+    }
+
+    .clinic-sub {
+      margin: 0 0 5px;
+      color: var(--text-3);
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-weight: 700;
+    }
+
+    .user-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      border: 1px solid #d9e6fa;
+      background: #fff;
+      min-height: 40px;
+      padding: 4px 8px 4px 4px;
+    }
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, #60a5fa, #2563eb);
+      font-size: .74rem;
+      font-weight: 700;
+    }
+
+    .views { display: grid; gap: var(--space-2); }
+    .view { display: none; gap: var(--space-2); }
+    .view.active { display: grid; animation: fadeUp 280ms ease; }
+
+    .snapshot-modal[hidden] { display: none; }
+    .snapshot-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: grid;
+      place-items: end center;
+      background: rgba(15, 23, 42, 0.35);
+      backdrop-filter: blur(4px);
+      padding: var(--space-2);
+    }
+
+    .schedule-modal[hidden] { display: none; }
+    .schedule-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 91;
+      display: grid;
+      place-items: center;
+      background: rgba(15, 23, 42, 0.35);
+      backdrop-filter: blur(4px);
+      padding: var(--space-2);
+    }
+
+    .schedule-panel {
+      width: min(100%, 760px);
+      max-height: min(88dvh, 760px);
+      overflow: auto;
+      border-radius: var(--radius-l);
+      background: #fff;
+      border: 1px solid #dbe7f7;
+      box-shadow: 0 28px 44px rgba(15, 23, 42, 0.22);
+      padding: var(--space-2);
+      animation: fadeUp 220ms ease;
+    }
+
+    .doctor-modal[hidden] { display: none; }
+    .doctor-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 93;
+      display: grid;
+      place-items: center;
+      background: rgba(15, 23, 42, 0.35);
+      backdrop-filter: blur(4px);
+      padding: var(--space-2);
+    }
+
+    .doctor-panel {
+      width: min(100%, 620px);
+      max-height: min(88dvh, 760px);
+      overflow: auto;
+      border-radius: var(--radius-l);
+      background: #fff;
+      border: 1px solid #dbe7f7;
+      box-shadow: 0 28px 44px rgba(15, 23, 42, 0.22);
+      padding: var(--space-2);
+      animation: fadeUp 220ms ease;
+    }
+
+    .snapshot-panel {
+      width: min(100%, 560px);
+      max-height: min(86dvh, 740px);
+      overflow: auto;
+      border-radius: var(--radius-l);
+      background: #fff;
+      border: 1px solid #dbe7f7;
+      box-shadow: 0 28px 44px rgba(15, 23, 42, 0.22);
+      padding: var(--space-2);
+      animation: fadeUp 220ms ease;
+    }
+
+    .snapshot-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .snapshot-head h4 {
+      margin: 0;
+      font-size: 1.05rem;
+      letter-spacing: -0.01em;
+    }
+
+    .snapshot-head p {
+      margin: 4px 0 0;
+      color: var(--text-3);
+      font-size: .82rem;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      border: 1px solid #d8e6fa;
+      background: #fff;
+      color: #1e3a8a;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all var(--ease);
+      flex: 0 0 auto;
+    }
+
+    .icon-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    .snapshot-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-bottom: 12px;
+    }
+
+    .snapshot-item {
+      border: 1px solid #deebfa;
+      border-radius: 12px;
+      background: #fbfdff;
+      padding: 11px;
+    }
+
+    .snapshot-item p {
+      margin: 0;
+      color: var(--text-3);
+      font-size: .78rem;
+    }
+
+    .snapshot-item strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 1rem;
+      color: #0f172a;
+    }
+
+    .snapshot-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .snapshot-list li {
+      border: 1px solid #deebfa;
+      border-radius: 12px;
+      background: #fbfdff;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .snapshot-list strong {
+      display: block;
+      font-size: .86rem;
+      margin-bottom: 2px;
+    }
+
+    .snapshot-list span {
+      color: var(--text-3);
+      font-size: .78rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 1fr;
+    }
+
+    .feature-item {
+      border: 1px solid #deebfa;
+      border-radius: 12px;
+      background: #fbfdff;
+      padding: 11px;
+    }
+
+    .feature-item strong {
+      display: block;
+      font-size: .86rem;
+      margin-bottom: 4px;
+    }
+
+    .feature-item p {
+      margin: 0;
+      color: var(--text-3);
+      font-size: .79rem;
+      line-height: 1.45;
+    }
+
+    .patient-info-modal[hidden] { display: none; }
+    .patient-info-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 92;
+      display: grid;
+      place-items: center;
+      padding: var(--space-2);
+      background: rgba(15, 23, 42, 0.35);
+      backdrop-filter: blur(4px);
+    }
+
+    .patient-info-panel {
+      width: min(100%, 620px);
+      max-height: min(88dvh, 760px);
+      overflow: auto;
+      border-radius: var(--radius-l);
+      background: #fff;
+      border: 1px solid #dbe7f7;
+      box-shadow: 0 28px 44px rgba(15, 23, 42, 0.22);
+      padding: var(--space-2);
+      animation: fadeUp 220ms ease;
+    }
+
+    .check-grid {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #deebfa;
+      border-radius: 10px;
+      background: #fbfdff;
+      padding: 9px 10px;
+      font-size: .82rem;
+      color: var(--text-2);
+    }
+
+    .check-item input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+    }
+
+    .status-chip {
+      margin-top: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 32px;
+      padding: 0 11px;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .showcase-grid {
+      display: grid;
+      gap: var(--space-2);
+      grid-template-columns: 1fr;
+    }
+
+    .showcase-image {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #dce9f9;
+      background: #fff;
+      box-shadow: var(--shadow-1);
+    }
+
+    .showcase-image img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .showcase-image figcaption {
+      padding: 10px;
+      color: var(--text-2);
+      font-size: .8rem;
+      line-height: 1.45;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 1fr;
+      margin-top: 12px;
+    }
+
+    .testimonial {
+      border-radius: 12px;
+      border: 1px solid #deebfa;
+      background: #fbfdff;
+      padding: 11px;
+    }
+
+    .testimonial p {
+      margin: 0;
+      color: var(--text-2);
+      font-size: .8rem;
+      line-height: 1.45;
+    }
+
+    .testimonial strong {
+      display: block;
+      margin-top: 8px;
+      font-size: .78rem;
+      color: #1e3a8a;
+    }
+
+    .kpi-grid {
+      display: grid;
+      gap: var(--space-2);
+      grid-template-columns: 1fr;
+    }
+
+    .kpi {
+      padding: var(--space-2);
+      border-radius: var(--radius-m);
+      background: linear-gradient(180deg, #fff, #f8fbff);
+      border: 1px solid #dce8f8;
+      transition: all var(--ease);
+    }
+
+    .kpi-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .kpi-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: #e9f2ff;
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+    }
+
+    .kpi-icon svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .kpi p { margin: 0; }
+    .kpi .label { color: var(--text-3); font-size: .82rem; }
+    .kpi .value { margin-top: 7px; font-size: 1.6rem; font-weight: 750; letter-spacing: -0.02em; }
+    .kpi .trend { margin-top: 5px; color: #0f766e; font-size: .78rem; font-weight: 700; }
+
+    .grid-2 {
+      display: grid;
+      gap: var(--space-2);
+      grid-template-columns: 1fr;
+    }
+
+    .card { padding: var(--space-2); }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .section-head h4 {
+      margin: 0;
+      font-size: 1.02rem;
+      letter-spacing: -0.01em;
+    }
+
+    .subtext {
+      margin: 0 0 12px;
+      color: var(--text-3);
+      font-size: .82rem;
+      line-height: 1.5;
+    }
+
+    .insight-strip {
+      border-radius: 12px;
+      border: 1px solid #deebfa;
+      background: #fbfdff;
+      padding: 12px;
+      margin-top: 12px;
+    }
+
+    .insight-strip strong {
+      display: block;
+      font-size: .86rem;
+      margin-bottom: 4px;
+    }
+
+    .insight-strip p {
+      margin: 0;
+      color: var(--text-3);
+      font-size: .79rem;
+      line-height: 1.45;
+    }
+
+    .link-btn {
+      border: 0;
+      background: transparent;
+      color: var(--primary);
+      font: inherit;
+      font-size: .84rem;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .doctor-link {
+      border: 1px solid #d7e5fb;
+      border-radius: 999px;
+      background: #f8fbff;
+      color: #1e3a8a;
+      font: inherit;
+      font-size: .76rem;
+      font-weight: 700;
+      padding: 4px 9px;
+      cursor: pointer;
+      transition: all var(--ease);
+    }
+
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 640px;
+      border: 1px solid #e4edf8;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    thead { background: #f2f7ff; }
+    th, td {
+      text-align: left;
+      padding: 11px;
+      border-bottom: 1px solid #edf2f9;
+      font-size: .86rem;
+    }
+    tbody tr:last-child td { border-bottom: 0; }
+    tbody tr { transition: background-color var(--ease); }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: .74rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+    .confirmed { color: #166534; background: #dcfce7; border-color: #bbf7d0; }
+    .pending { color: #92400e; background: #fef3c7; border-color: #fde68a; }
+    .completed { color: #0f766e; background: #ccfbf1; border-color: #99f6e4; }
+
+    .queue {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .queue li {
+      border-radius: 12px;
+      border: 1px solid #deebfa;
+      background: #fbfdff;
+      padding: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      transition: all var(--ease);
+    }
+
+    .queue strong { display: block; margin-bottom: 3px; font-size: .88rem; }
+    .queue span { font-size: .8rem; color: var(--text-3); }
+
+    .booking-grid, .patient-grid, .analytics-grid {
+      display: grid;
+      gap: var(--space-2);
+      grid-template-columns: 1fr;
+    }
+
+    .muted { margin: 4px 0 0; color: var(--text-3); font-size: .86rem; }
+
+    .chip-grid {
+      margin-top: 10px;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 1fr;
+    }
+
+    .option {
+      border: 1px solid #d9e7f8;
+      border-radius: 12px;
+      background: #fff;
+      text-align: left;
+      padding: 12px;
+      min-height: 86px;
+      cursor: pointer;
+      transition: all var(--ease);
+    }
+
+    .option strong { display: block; margin-bottom: 4px; font-size: .88rem; }
+    .option span { color: var(--text-3); font-size: .79rem; line-height: 1.45; }
+    .option.active {
+      border-color: #a8c5f3;
+      background: #edf4ff;
+      box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.07);
+    }
+
+    .picker-block { margin-top: var(--space-2); }
+    .picker-block p { margin: 0 0 8px; color: var(--text-3); font-size: .82rem; font-weight: 700; }
+
+    .pill-grid {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pill {
+      border-radius: 11px;
+      border: 1px solid #d5e5f9;
+      background: #fff;
+      min-height: 44px;
+      cursor: pointer;
+      font: inherit;
+      font-size: .8rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      transition: all var(--ease);
+    }
+
+    .pill small {
+      display: block;
+      margin-top: 2px;
+      color: var(--text-3);
+      font-size: .68rem;
+      font-weight: 600;
+    }
+
+    .pill.active {
+      background: #e9f2ff;
+      border-color: #9ec0ef;
+      color: var(--primary);
+    }
+
+    .summary {
+      border-radius: 12px;
+      border: 1px solid #dce9f9;
+      background: #f8fbff;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .summary p {
+      margin: 4px 0;
+      font-size: .83rem;
+      color: var(--text-2);
+    }
+
+    .summary strong { color: #1e3a8a; }
+
+    .form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .field {
+      position: relative;
+      padding-top: 4px;
+    }
+
+    .input {
+      width: 100%;
+      border: 1px solid #cedff4;
+      border-radius: 12px;
+      background: #fff;
+      font: inherit;
+      font-size: .92rem;
+      color: var(--text);
+      padding: 18px 12px 10px;
+      min-height: 48px;
+      transition: all var(--ease);
+    }
+
+    .float {
+      position: absolute;
+      left: 12px;
+      top: 17px;
+      font-size: .86rem;
+      color: var(--text-3);
+      pointer-events: none;
+      transition: all var(--ease);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0), #fff 35%);
+      padding: 0 4px;
+    }
+
+    .input:focus + .float,
+    .input:not(:placeholder-shown) + .float {
+      top: 7px;
+      font-size: .69rem;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .success {
+      margin-top: 12px;
+      border-radius: 12px;
+      border: 1px solid #bae6fd;
+      background: #f0f9ff;
+      padding: 12px;
+      display: grid;
+      gap: 5px;
+    }
+
+    .success[hidden] { display: none; }
+    .success strong { color: #0c4a6e; font-size: .9rem; }
+    .success p { margin: 0; color: #155e75; font-size: .82rem; }
+
+    .stat-grid { display: grid; gap: 10px; }
+    .stat {
+      border-radius: 12px;
+      border: 1px solid #deebfa;
+      background: #fbfdff;
+      padding: 11px;
+    }
+    .stat p { margin: 0; color: var(--text-3); font-size: .8rem; }
+    .stat strong { display: block; margin-top: 3px; font-size: .92rem; }
+
+    .follow-up {
+      margin-top: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+      color: var(--primary);
+      font-size: .8rem;
+      font-weight: 700;
+      padding: 8px 11px;
+    }
+
+    .timeline {
+      list-style: none;
+      margin: 0;
+      padding: 2px 0 0;
+      display: grid;
+      gap: 10px;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      top: 12px;
+      bottom: 14px;
+      width: 2px;
+      background: #d7e5f8;
+    }
+
+    .timeline li {
+      position: relative;
+      border: 1px solid #deebfa;
+      border-radius: 12px;
+      background: #fbfdff;
+      padding: 11px 11px 11px 30px;
+      transition: all var(--ease);
+    }
+
+    .timeline li::before {
+      content: "";
+      position: absolute;
+      left: 3px;
+      top: 17px;
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      border: 3px solid #3b82f6;
+      background: #fff;
+    }
+
+    .timeline h5 { margin: 0 0 4px; font-size: .88rem; }
+    .timeline p { margin: 0; color: var(--text-3); font-size: .8rem; line-height: 1.45; }
+
+    .notes {
+      margin-top: 12px;
+      border: 1px dashed #c6dcf7;
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px;
+    }
+    .notes h5 { margin: 0 0 7px; font-size: .88rem; }
+    .notes p { margin: 0; color: var(--text-2); font-size: .81rem; line-height: 1.5; }
+
+    .metric-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 1fr;
+      margin-bottom: 12px;
+    }
+
+    .metric {
+      border-radius: 12px;
+      border: 1px solid #deebfa;
+      background: #fbfdff;
+      padding: 11px;
+    }
+    .metric p { margin: 0; color: var(--text-3); font-size: .8rem; }
+    .metric strong { display: block; margin-top: 3px; font-size: 1.08rem; }
+
+    .bar-chart {
+      height: 210px;
+      border: 1px solid #e0ebf8;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #fff, #f9fcff);
+      padding: 16px 10px 10px;
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+      align-items: end;
+    }
+
+    .bar-item {
+      display: grid;
+      justify-items: center;
+      gap: 6px;
+    }
+
+    .bar {
+      width: 100%;
+      max-width: 28px;
+      height: calc(var(--val) * 1%);
+      min-height: 20px;
+      border-radius: 8px 8px 5px 5px;
+      background: linear-gradient(180deg, #60a5fa, #2563eb);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35);
+      transition: transform var(--ease);
+    }
+
+    .bar-item span { font-size: .72rem; color: var(--text-3); font-weight: 700; }
+
+    .donut-wrap {
+      border: 1px solid #e0ebf8;
+      border-radius: 12px;
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .donut {
+      margin: 0 auto;
+      width: 122px;
+      height: 122px;
+      border-radius: 999px;
+      background: conic-gradient(#2563eb 0 67%, #bfdbfe 67% 100%);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .donut::after {
+      content: "";
+      width: 78px;
+      height: 78px;
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px #e2e8f0;
+      position: absolute;
+    }
+
+    .donut strong {
+      position: relative;
+      z-index: 1;
+      font-size: 1.1rem;
+      color: #1e3a8a;
+    }
+
+    .progress-list { display: grid; gap: 8px; }
+    .progress-list span { display: block; font-size: .79rem; color: var(--text-2); font-weight: 600; margin-bottom: 3px; }
+    .track { height: 8px; border-radius: 999px; background: #e2ecf9; overflow: hidden; }
+    .fill { height: 100%; width: var(--pct); border-radius: inherit; background: linear-gradient(90deg, #60a5fa, #2563eb); }
+
+    button:focus-visible, .input:focus-visible, .tab:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    @media (hover: hover) and (pointer: fine) {
+      .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 14px 28px rgba(37, 99, 235, .34); }
+      .btn-secondary:hover { border-color: #bfd2f3; background: #fff; }
+      .doctor-link:hover { background: #edf4ff; border-color: #a8c5f3; }
+      .tab:hover:not([aria-selected="true"]) { border-color: #d8e6fa; background: #f8fbff; }
+      .kpi:hover, .queue li:hover, .timeline li:hover, .option:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-2);
+      }
+      tbody tr:hover { background: #f8fbff; }
+      .pill:hover { background: #f3f8ff; border-color: #a8c5f3; }
+      .bar:hover { transform: scaleY(1.04); }
+    }
+
+    @media (min-width: 680px) {
+      .chip-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .pill-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .showcase-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .testimonial-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media (min-width: 960px) {
+      .app {
+        grid-template-columns: 250px 1fr;
+        padding: var(--space-3);
+        gap: var(--space-3);
+      }
+
+      .sidebar {
+        position: sticky;
+        top: var(--space-3);
+        height: calc(100dvh - 48px);
+        align-content: start;
+      }
+
+      .tabs {
+        display: grid;
+        overflow: visible;
+      }
+
+      .hero-grid {
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        align-items: center;
+      }
+
+      .kpi-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .grid-2 { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); }
+      .booking-grid { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+      .patient-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+      .analytics-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+    }
+
+    @media (min-width: 680px) {
+      .snapshot-modal {
+        place-items: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#mainContent">Skip to main content</a>
+
+  <div class="app">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="brand">
+        <div class="brand-mark">MSK</div>
+        <div>
+          <h1>Aster MSK Clinic Suite</h1>
+          <p>Smart Clinic Management</p>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Clinic sections">
+        <button class="tab" role="tab" aria-selected="true" data-view="dashboard" data-title="Clinic Dashboard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h8V3H3zM13 21h8V11h-8zM13 3v6h8V3zM3 21h8v-6H3z"/></svg>
+          Dashboard
+        </button>
+        <button class="tab" role="tab" aria-selected="false" data-view="booking" data-title="Booking Experience">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v4M17 3v4M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>
+          Bookings
+        </button>
+        <button class="tab" role="tab" aria-selected="false" data-view="patient" data-title="Patient Profile">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 1 0-16 0M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+          Patients
+        </button>
+        <button class="tab" role="tab" aria-selected="false" data-view="analytics" data-title="Clinic Analytics">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M10 19v-8M16 19v-5M22 19v-12"/></svg>
+          Analytics
+        </button>
+      </div>
+
+      <div class="sidebar-note">
+        Follow-up adherence is <strong>89%</strong> this week with 7 post-injection reviews due within 72 hours.
+      </div>
+    </aside>
+
+    <main class="main" id="mainContent">
+      <section class="hero" aria-labelledby="heroTitle">
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Smart Clinic Management</p>
+            <h2 id="heroTitle">A premium operating system for modern MSK, physio, and injection clinics.</h2>
+            <p>Unify ultrasound-guided injection workflows, pain triage, clinical documentation, and post-procedure follow-up in one calm, medically focused workspace built for real outpatient MSK care.</p>
+            <div class="hero-tags" aria-label="Clinic capabilities">
+              <span class="hero-tag">Ultrasound-Guided Procedures</span>
+              <span class="hero-tag">Pain Locator Triage</span>
+              <span class="hero-tag">Dual-Certified Clinical Notes</span>
+              <span class="hero-tag">Manchester + Burnley</span>
+            </div>
+            <div class="hero-actions">
+              <button class="btn btn-primary" id="startBookingBtn" type="button">Start New Booking</button>
+              <button class="btn btn-secondary" id="openSnapshotBtn" type="button">View Today’s Clinical Snapshot</button>
+              <button class="btn btn-secondary" id="openPatientInfoBtn" type="button">Patient Info & Prep</button>
+            </div>
+          </div>
+          <div class="hero-metrics" aria-label="Clinic performance highlights">
+            <article class="hero-visual">
+              <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80" alt="Clinician reviewing ultrasound-guided musculoskeletal treatment">
+              <div class="hero-visual-badge">In-house ultrasound imaging with guided injection precision</div>
+            </article>
+            <article class="mini-kpi">
+              <small>Patient Satisfaction</small>
+              <strong>97.2%</strong>
+            </article>
+            <article class="mini-kpi">
+              <small>Same-Day Confirmations</small>
+              <strong>91%</strong>
+            </article>
+            <article class="mini-kpi">
+              <small>Average Wait Time</small>
+              <strong>6m 40s</strong>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <header class="topbar" aria-live="polite">
+        <div>
+          <p class="clinic-sub">Aster Musculoskeletal & Injection Clinic</p>
+          <h3 id="viewTitle">Clinic Dashboard</h3>
+        </div>
+        <div class="user-pill">
+          <div class="avatar">DR</div>
+          <strong style="font-size:.82rem;">Dr. Rhea Dawson</strong>
+        </div>
+      </header>
+
+      <div class="views">
+        <section class="view active" id="dashboard" role="tabpanel">
+          <div class="kpi-grid">
+            <article class="kpi">
+              <div class="kpi-head">
+                <p class="label">Today's Appointments</p>
+                <div class="kpi-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v4M17 3v4M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></div>
+              </div>
+              <p class="value">18</p>
+              <p class="trend">+12% vs last Friday</p>
+            </article>
+            <article class="kpi">
+              <div class="kpi-head">
+                <p class="label">Active Patient Panel</p>
+                <div class="kpi-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 1 0-16 0M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg></div>
+              </div>
+              <p class="value">1,426</p>
+              <p class="trend">+6.4% month-over-month</p>
+            </article>
+            <article class="kpi">
+              <div class="kpi-head">
+                <p class="label">Projected Weekly Revenue</p>
+                <div class="kpi-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M21 10V4h-6"/></svg></div>
+              </div>
+              <p class="value">£12,480</p>
+              <p class="trend">+9.1% from prior week</p>
+            </article>
+          </div>
+
+          <div class="grid-2">
+            <article class="card">
+              <div class="section-head">
+                <h4>Today's Appointment Flow</h4>
+                <button class="link-btn" id="openScheduleBtn" type="button">View full schedule</button>
+              </div>
+              <div class="table-wrap">
+                <table aria-label="Appointments table">
+                  <thead>
+                    <tr>
+                      <th>Time</th>
+                      <th>Patient</th>
+                      <th>Treatment</th>
+                      <th>Clinician</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>09:00</td>
+                      <td>Emma Patel</td>
+                      <td>Cortisone Shoulder Injection</td>
+                      <td><button class="doctor-link doctor-trigger" type="button" data-doctor="dawson">Dr. Dawson</button></td>
+                      <td><span class="badge confirmed">Confirmed</span></td>
+                    </tr>
+                    <tr>
+                      <td>10:30</td>
+                      <td>Lucas Nguyen</td>
+                      <td>PRP Knee Injection</td>
+                      <td><button class="doctor-link doctor-trigger" type="button" data-doctor="dawson">Dr. Dawson</button></td>
+                      <td><span class="badge pending">Pending Consent</span></td>
+                    </tr>
+                    <tr>
+                      <td>13:00</td>
+                      <td>Olivia Carter</td>
+                      <td>Trigger Point Injection</td>
+                      <td><button class="doctor-link doctor-trigger" type="button" data-doctor="clarke">A. Clarke, MSK Physio</button></td>
+                      <td><span class="badge confirmed">Confirmed</span></td>
+                    </tr>
+                    <tr>
+                      <td>15:15</td>
+                      <td>Michael Reed</td>
+                      <td>Post-Injection Review</td>
+                      <td><button class="doctor-link doctor-trigger" type="button" data-doctor="clarke">A. Clarke, MSK Physio</button></td>
+                      <td><span class="badge completed">Completed</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+
+            <aside class="card">
+              <div class="section-head"><h4>Care Queue</h4></div>
+              <ul class="queue">
+                <li>
+                  <div>
+                    <strong>Sophia Ahmed</strong>
+                    <span>Post-PRP mobility check</span>
+                  </div>
+                  <span>11:45</span>
+                </li>
+                <li>
+                  <div>
+                    <strong>Daniel Evans</strong>
+                    <span>Injection consent final review</span>
+                  </div>
+                  <span>14:10</span>
+                </li>
+                <li>
+                  <div>
+                    <strong>Mia Harrison</strong>
+                    <span>Lumbar rehab progress checkpoint</span>
+                  </div>
+                  <span>16:30</span>
+                </li>
+              </ul>
+              <p class="subtext" style="margin-top:12px;">Patient pathway: rapid assessment → in-house ultrasound → guided procedure → 48-hour follow-up call.</p>
+            </aside>
+          </div>
+
+          <article class="card">
+            <div class="section-head"><h4>Clinical Team Directory</h4></div>
+            <div class="feature-grid">
+              <article class="feature-item">
+                <strong>Dr. Rhea Dawson · MSK Injection Specialist</strong>
+                <p>Focus: ultrasound-guided cortisone, PRP, and spine injections with same-day imaging review.</p>
+                <button class="doctor-link doctor-trigger" type="button" data-doctor="dawson" style="margin-top:8px;">View doctor profile</button>
+              </article>
+              <article class="feature-item">
+                <strong>Aisha Clarke · Senior MSK Physiotherapist</strong>
+                <p>Focus: post-injection rehabilitation, shoulder and lumbar rehab progression, and return-to-activity plans.</p>
+                <button class="doctor-link doctor-trigger" type="button" data-doctor="clarke" style="margin-top:8px;">View doctor profile</button>
+              </article>
+              <article class="feature-item">
+                <strong>Dr. Amir Khan · Dual-Certified GP/Osteopath</strong>
+                <p>Focus: complex pain diagnostics, second opinions, and integrated care planning across imaging and manual care.</p>
+                <button class="doctor-link doctor-trigger" type="button" data-doctor="amir" style="margin-top:8px;">View doctor profile</button>
+              </article>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <h4>Clinic Experience Showcase</h4>
+            </div>
+            <div class="showcase-grid">
+              <figure class="showcase-image">
+                <img src="https://images.pexels.com/photos/305568/pexels-photo-305568.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Consultation room in a modern musculoskeletal clinic">
+                <figcaption>Calm treatment environment designed for thorough consultations and patient confidence.</figcaption>
+              </figure>
+              <figure class="showcase-image">
+                <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1200&q=80" alt="Physiotherapy and injection care setup with diagnostic equipment">
+                <figcaption>Integrated physiotherapy and guided injection pathway with same-day reporting workflow.</figcaption>
+              </figure>
+            </div>
+            <div class="testimonial-grid" aria-label="Patient proof points">
+              <article class="testimonial">
+                <p>"Booked quickly, had ultrasound assessment, and pain reduced within days. The explanation was clear throughout."</p>
+                <strong>Shoulder Pain Patient · Manchester</strong>
+              </article>
+              <article class="testimonial">
+                <p>"Sciatica flare was handled with a structured plan and follow-up call. Excellent communication before and after procedure."</p>
+                <strong>Spine Injection Patient · Burnley</strong>
+              </article>
+              <article class="testimonial">
+                <p>"I appreciated being listened to and receiving a GP-ready summary report with treatment options."</p>
+                <strong>Knee OA Patient · Follow-up Review</strong>
+              </article>
+            </div>
+          </article>
+        </section>
+
+        <section class="view" id="booking" role="tabpanel">
+          <div class="booking-grid">
+            <article class="card">
+              <div class="section-head">
+                <h4>Patient Booking Experience</h4>
+              </div>
+              <p class="muted">Select treatment, choose schedule, and confirm in one clean flow.</p>
+              <p class="subtext">Includes pain-locator intake, consent status checks, and optional GP summary sharing after treatment.</p>
+
+              <div class="chip-grid" aria-label="Treatment options">
+                <button class="option active treatment" type="button" data-treatment="Cortisone Injection">
+                  <strong>Cortisone Injection</strong>
+                  <span>Rapid inflammation control for acute joint flare and pain reduction.</span>
+                </button>
+                <button class="option treatment" type="button" data-treatment="Hyaluronic Injection">
+                  <strong>Hyaluronic Injection</strong>
+                  <span>Improves joint lubrication to support low-impact mobility and comfort.</span>
+                </button>
+                <button class="option treatment" type="button" data-treatment="PRP Therapy">
+                  <strong>PRP Therapy</strong>
+                  <span>Autologous platelet treatment for tendon and soft tissue healing support.</span>
+                </button>
+                <button class="option treatment" type="button" data-treatment="Trigger Point Injection">
+                  <strong>Trigger Point Injection</strong>
+                  <span>Relieves focal muscle spasm and chronic myofascial pain patterns.</span>
+                </button>
+                <button class="option treatment" type="button" data-treatment="Caudal Epidural Injection">
+                  <strong>Caudal Epidural Injection</strong>
+                  <span>For severe lower back or sciatica flares under specialist assessment.</span>
+                </button>
+                <button class="option treatment" type="button" data-treatment="Facet Joint Injection">
+                  <strong>Facet Joint Injection</strong>
+                  <span>Targeted spine pain management with imaging-guided precision.</span>
+                </button>
+              </div>
+
+              <div class="picker-block">
+                <p>Choose Date</p>
+                <div class="pill-grid">
+                  <button class="pill date active" type="button" data-date="Mon 20 Apr">Mon <small>20 Apr</small></button>
+                  <button class="pill date" type="button" data-date="Tue 21 Apr">Tue <small>21 Apr</small></button>
+                  <button class="pill date" type="button" data-date="Wed 22 Apr">Wed <small>22 Apr</small></button>
+                  <button class="pill date" type="button" data-date="Thu 23 Apr">Thu <small>23 Apr</small></button>
+                  <button class="pill date" type="button" data-date="Fri 24 Apr">Fri <small>24 Apr</small></button>
+                  <button class="pill date" type="button" data-date="Mon 27 Apr">Mon <small>27 Apr</small></button>
+                </div>
+              </div>
+
+              <div class="picker-block">
+                <p>Choose Time</p>
+                <div class="pill-grid">
+                  <button class="pill time active" type="button" data-time="09:30">09:30</button>
+                  <button class="pill time" type="button" data-time="10:15">10:15</button>
+                  <button class="pill time" type="button" data-time="11:30">11:30</button>
+                  <button class="pill time" type="button" data-time="13:15">13:15</button>
+                  <button class="pill time" type="button" data-time="15:00">15:00</button>
+                  <button class="pill time" type="button" data-time="16:30">16:30</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="summary">
+                <p><strong>Treatment:</strong> <span id="sumTreatment">Cortisone Injection</span></p>
+                <p><strong>Date:</strong> <span id="sumDate">Mon 20 Apr</span></p>
+                <p><strong>Time:</strong> <span id="sumTime">09:30</span></p>
+              </div>
+              <div class="insight-strip">
+                <strong>Pre-Procedure Workflow</strong>
+                <p>Pain locator complete, contraindication check pending, and optional chaperone preference captured before confirmation.</p>
+              </div>
+
+              <form class="form" id="bookingForm" novalidate>
+                <div class="field">
+                  <input class="input" id="patientName" type="text" placeholder=" " required autocomplete="name">
+                  <label class="float" for="patientName">Patient Full Name</label>
+                </div>
+                <div class="field">
+                  <input class="input" id="patientPhone" type="tel" placeholder=" " required autocomplete="tel">
+                  <label class="float" for="patientPhone">Mobile Number</label>
+                </div>
+                <div class="field">
+                  <input class="input" id="patientEmail" type="email" placeholder=" " required autocomplete="email">
+                  <label class="float" for="patientEmail">Email Address</label>
+                </div>
+                <button class="btn btn-primary" type="submit">Confirm Booking</button>
+              </form>
+
+              <div class="success" id="successState" hidden aria-live="polite">
+                <strong>Booking Confirmed</strong>
+                <p><span id="okName">Patient</span> is scheduled for <span id="okTreatment">Cortisone Injection</span>.</p>
+                <p>Appointment set for <span id="okDateTime">Mon 20 Apr at 09:30</span>.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="patient" role="tabpanel">
+          <div class="patient-grid">
+            <article class="card">
+              <div class="section-head"><h4>Patient Summary</h4></div>
+              <div class="stat-grid">
+                <div class="stat">
+                  <p>Name</p>
+                  <strong>Olivia Carter</strong>
+                </div>
+                <div class="stat">
+                  <p>Contact</p>
+                  <strong>+44 7799 112233 · olivia.carter@email.com</strong>
+                </div>
+                <div class="stat">
+                  <p>Last Visit</p>
+                  <strong>04 Apr 2026 · PRP Shoulder Injection</strong>
+                </div>
+                <div class="stat">
+                  <p>Clinical Focus</p>
+                  <strong>Rotator cuff irritation with load intolerance</strong>
+                </div>
+                <div class="stat">
+                  <p>Imaging & Reports</p>
+                  <strong>Ultrasound findings documented and GP summary shared</strong>
+                </div>
+              </div>
+              <div class="follow-up"><span class="dot" aria-hidden="true"></span>Follow-up reminder: 7 days remaining</div>
+            </article>
+
+            <article class="card">
+              <div class="section-head"><h4>Treatment Timeline</h4></div>
+              <ol class="timeline">
+                <li>
+                  <h5>04 Apr 2026 · PRP Shoulder Injection</h5>
+                  <p>Pain score reduced from 6/10 to 3/10. Continue graded loading and scapular control work.</p>
+                </li>
+                <li>
+                  <h5>21 Mar 2026 · Trigger Point Injection</h5>
+                  <p>Marked reduction in upper trapezius tenderness and improved overhead range of motion.</p>
+                </li>
+                <li>
+                  <h5>08 Mar 2026 · Initial MSK Assessment</h5>
+                  <p>Findings support mixed tendinopathy and myofascial pain. Agreed injection + physio plan.</p>
+                </li>
+              </ol>
+
+              <div class="notes">
+                <h5>Clinician Notes</h5>
+                <p>Patient reports improved sleep, reduced morning stiffness, and better tolerance to desk work. Plan one final reassessment after current cycle and maintain home program 4 times/week.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="analytics" role="tabpanel">
+          <div class="analytics-grid">
+            <article class="card">
+              <div class="metric-grid">
+                <div class="metric"><p>Bookings This Week</p><strong>84</strong></div>
+                <div class="metric"><p>Repeat Patients</p><strong>67%</strong></div>
+              </div>
+              <div class="section-head"><h4>Weekly Booking Distribution</h4></div>
+              <div class="bar-chart" aria-label="Bookings by weekday">
+                <div class="bar-item"><div class="bar" style="--val:52;"></div><span>Mon</span></div>
+                <div class="bar-item"><div class="bar" style="--val:68;"></div><span>Tue</span></div>
+                <div class="bar-item"><div class="bar" style="--val:76;"></div><span>Wed</span></div>
+                <div class="bar-item"><div class="bar" style="--val:71;"></div><span>Thu</span></div>
+                <div class="bar-item"><div class="bar" style="--val:84;"></div><span>Fri</span></div>
+                <div class="bar-item"><div class="bar" style="--val:45;"></div><span>Sat</span></div>
+                <div class="bar-item"><div class="bar" style="--val:32;"></div><span>Sun</span></div>
+              </div>
+            </article>
+
+            <article class="card donut-wrap">
+              <div class="section-head"><h4>Retention Mix</h4></div>
+              <div class="donut"><strong>67%</strong></div>
+              <div class="progress-list">
+                <div>
+                  <span>Injection Follow-up Reviews · 74%</span>
+                  <div class="track"><div class="fill" style="--pct:74%;"></div></div>
+                </div>
+                <div>
+                  <span>Physiotherapy Blocks · 58%</span>
+                  <div class="track"><div class="fill" style="--pct:58%;"></div></div>
+                </div>
+                <div>
+                  <span>New Patient Conversion · 42%</span>
+                  <div class="track"><div class="fill" style="--pct:42%;"></div></div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="snapshot-modal" id="snapshotModal" hidden>
+    <section class="snapshot-panel" role="dialog" aria-modal="true" aria-labelledby="snapshotTitle">
+      <div class="snapshot-head">
+        <div>
+          <h4 id="snapshotTitle">Today’s Clinical Snapshot</h4>
+          <p>Live overview for Friday clinic operations and treatment flow.</p>
+        </div>
+        <button class="icon-btn" id="closeSnapshotBtn" type="button" aria-label="Close clinical snapshot">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="snapshot-grid">
+        <article class="snapshot-item">
+          <p>Patients checked in</p>
+          <strong>11 / 18</strong>
+        </article>
+        <article class="snapshot-item">
+          <p>Injection procedures</p>
+          <strong>7 scheduled</strong>
+        </article>
+        <article class="snapshot-item">
+          <p>Avg consult time</p>
+          <strong>23 min</strong>
+        </article>
+        <article class="snapshot-item">
+          <p>Pending consents</p>
+          <strong>2 patients</strong>
+        </article>
+      </div>
+
+      <div class="feature-grid" style="margin-bottom:12px;">
+        <article class="feature-item">
+          <strong>Pain Locator Intake Complete</strong>
+          <p>14 patients completed digital pain mapping before arrival, reducing triage time at reception.</p>
+        </article>
+        <article class="feature-item">
+          <strong>Dual-Certified Review Queue</strong>
+          <p>5 complex cases flagged for combined GP + osteopathic second look before procedure sign-off.</p>
+        </article>
+        <article class="feature-item">
+          <strong>Post-Procedure Follow-up</strong>
+          <p>8 automated 48-hour follow-up calls scheduled with symptom progression tracking.</p>
+        </article>
+        <article class="feature-item">
+          <strong>Location Routing</strong>
+          <p>Manchester fully booked after 15:00. New knee OA enquiries routed to Burnley availability.</p>
+        </article>
+      </div>
+
+      <div class="section-head">
+        <h4 style="font-size:.95rem;">Next Clinical Milestones</h4>
+      </div>
+      <ul class="snapshot-list">
+        <li>
+          <div>
+            <strong>10:30 · Lucas Nguyen</strong>
+            <span>PRP knee injection requires final consent signature.</span>
+          </div>
+          <span class="badge pending">Action</span>
+        </li>
+        <li>
+          <div>
+            <strong>13:00 · Olivia Carter</strong>
+            <span>Trigger point injection with post-care protocol handoff.</span>
+          </div>
+          <span class="badge confirmed">Ready</span>
+        </li>
+        <li>
+          <div>
+            <strong>16:30 · Mia Harrison</strong>
+            <span>Lumbar rehab checkpoint and follow-up plan update.</span>
+          </div>
+          <span class="badge confirmed">On Track</span>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="schedule-modal" id="scheduleModal" hidden>
+    <section class="schedule-panel" role="dialog" aria-modal="true" aria-labelledby="scheduleTitle">
+      <div class="snapshot-head">
+        <div>
+          <h4 id="scheduleTitle">Full Clinical Schedule · Friday</h4>
+          <p>All appointments, procedures, review slots, and room allocation.</p>
+        </div>
+        <button class="icon-btn" id="closeScheduleBtn" type="button" aria-label="Close full schedule">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="table-wrap">
+        <table aria-label="Full day clinic schedule">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Patient</th>
+              <th>Service</th>
+              <th>Doctor</th>
+              <th>Room</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>09:00</td>
+              <td>Emma Patel</td>
+              <td>Cortisone Shoulder Injection</td>
+              <td><button class="doctor-link doctor-trigger" type="button" data-doctor="dawson">Dr. Dawson</button></td>
+              <td>US Suite 1</td>
+              <td><span class="badge confirmed">Confirmed</span></td>
+            </tr>
+            <tr>
+              <td>10:30</td>
+              <td>Lucas Nguyen</td>
+              <td>PRP Knee Injection</td>
+              <td><button class="doctor-link doctor-trigger" type="button" data-doctor="dawson">Dr. Dawson</button></td>
+              <td>US Suite 1</td>
+              <td><span class="badge pending">Consent pending</span></td>
+            </tr>
+            <tr>
+              <td>13:00</td>
+              <td>Olivia Carter</td>
+              <td>Trigger Point Injection</td>
+              <td><button class="doctor-link doctor-trigger" type="button" data-doctor="clarke">A. Clarke</button></td>
+              <td>Procedure Room 2</td>
+              <td><span class="badge confirmed">Confirmed</span></td>
+            </tr>
+            <tr>
+              <td>15:15</td>
+              <td>Michael Reed</td>
+              <td>Post-Injection Review</td>
+              <td><button class="doctor-link doctor-trigger" type="button" data-doctor="clarke">A. Clarke</button></td>
+              <td>MSK Rehab Room</td>
+              <td><span class="badge completed">Completed</span></td>
+            </tr>
+            <tr>
+              <td>17:00</td>
+              <td>Priya Shah</td>
+              <td>Complex Back Pain Second Opinion</td>
+              <td><button class="doctor-link doctor-trigger" type="button" data-doctor="amir">Dr. Amir Khan</button></td>
+              <td>Consult Room 3</td>
+              <td><span class="badge confirmed">Confirmed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div class="patient-info-modal" id="patientInfoModal" hidden>
+    <section class="patient-info-panel" role="dialog" aria-modal="true" aria-labelledby="patientInfoTitle">
+      <div class="snapshot-head">
+        <div>
+          <h4 id="patientInfoTitle">Patient Information & Injection Prep</h4>
+          <p>Based on common patient guidance flow: prep, consent, chaperone, and follow-up clarity.</p>
+        </div>
+        <button class="icon-btn" id="closePatientInfoBtn" type="button" aria-label="Close patient information panel">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-item">
+          <strong>Before Appointment</strong>
+          <p>Complete pain locator, upload prior MRI/scan reports, and list current medications including anticoagulants.</p>
+        </article>
+        <article class="feature-item">
+          <strong>During Consultation</strong>
+          <p>Dual clinical review with targeted exam and in-house ultrasound to confirm diagnosis and treatment fit.</p>
+        </article>
+        <article class="feature-item">
+          <strong>Procedure Safety</strong>
+          <p>Ultrasound-guided injection with site verification, infection control steps, and consent recheck at bedside.</p>
+        </article>
+        <article class="feature-item">
+          <strong>Aftercare</strong>
+          <p>48-hour follow-up call, symptom tracker, and GP summary letter for continuity of care.</p>
+        </article>
+      </div>
+
+      <div class="check-grid" id="prepChecklist">
+        <label class="check-item"><input type="checkbox" checked> Pain locator completed</label>
+        <label class="check-item"><input type="checkbox"> Chaperone preference documented</label>
+        <label class="check-item"><input type="checkbox"> Consent and risk discussion signed</label>
+        <label class="check-item"><input type="checkbox"> Post-procedure guidance sent by email</label>
+      </div>
+
+      <div class="status-chip" id="prepStatusChip">Prep status: 1 of 4 complete</div>
+    </section>
+  </div>
+
+  <div class="doctor-modal" id="doctorModal" hidden>
+    <section class="doctor-panel" role="dialog" aria-modal="true" aria-labelledby="doctorTitle">
+      <div class="snapshot-head">
+        <div>
+          <h4 id="doctorTitle">Doctor Profile</h4>
+          <p id="doctorRole">Clinical role</p>
+        </div>
+        <button class="icon-btn" id="closeDoctorBtn" type="button" aria-label="Close doctor profile">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-item">
+          <strong>Special Interests</strong>
+          <p id="doctorSpecialties"></p>
+        </article>
+        <article class="feature-item">
+          <strong>Clinics</strong>
+          <p id="doctorLocations"></p>
+        </article>
+        <article class="feature-item">
+          <strong>Patient-Facing Features</strong>
+          <p id="doctorFeatures"></p>
+        </article>
+        <article class="feature-item">
+          <strong>Typical Session</strong>
+          <p id="doctorSession"></p>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll(".tab");
+    const views = document.querySelectorAll(".view");
+    const titleEl = document.getElementById("viewTitle");
+    const startBookingBtn = document.getElementById("startBookingBtn");
+    const openSnapshotBtn = document.getElementById("openSnapshotBtn");
+    const snapshotModal = document.getElementById("snapshotModal");
+    const closeSnapshotBtn = document.getElementById("closeSnapshotBtn");
+    const openScheduleBtn = document.getElementById("openScheduleBtn");
+    const scheduleModal = document.getElementById("scheduleModal");
+    const closeScheduleBtn = document.getElementById("closeScheduleBtn");
+    const openPatientInfoBtn = document.getElementById("openPatientInfoBtn");
+    const patientInfoModal = document.getElementById("patientInfoModal");
+    const closePatientInfoBtn = document.getElementById("closePatientInfoBtn");
+    const doctorModal = document.getElementById("doctorModal");
+    const closeDoctorBtn = document.getElementById("closeDoctorBtn");
+    const doctorTriggers = document.querySelectorAll(".doctor-trigger");
+    const doctorTitle = document.getElementById("doctorTitle");
+    const doctorRole = document.getElementById("doctorRole");
+    const doctorSpecialties = document.getElementById("doctorSpecialties");
+    const doctorLocations = document.getElementById("doctorLocations");
+    const doctorFeatures = document.getElementById("doctorFeatures");
+    const doctorSession = document.getElementById("doctorSession");
+    const prepChecklist = document.getElementById("prepChecklist");
+    const prepStatusChip = document.getElementById("prepStatusChip");
+
+    function openView(viewId, title) {
+      tabs.forEach((tab) => {
+        const active = tab.dataset.view === viewId;
+        tab.setAttribute("aria-selected", active ? "true" : "false");
+      });
+
+      views.forEach((view) => {
+        view.classList.toggle("active", view.id === viewId);
+      });
+
+      titleEl.textContent = title;
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        openView(tab.dataset.view, tab.dataset.title);
+      });
+    });
+
+    startBookingBtn.addEventListener("click", () => {
+      openView("booking", "Booking Experience");
+      document.getElementById("patientName").focus();
+    });
+
+    function openSnapshot() {
+      snapshotModal.hidden = false;
+      closeSnapshotBtn.focus();
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeSnapshot() {
+      snapshotModal.hidden = true;
+      if (patientInfoModal.hidden && scheduleModal.hidden && doctorModal.hidden) {
+        document.body.style.overflow = "";
+      }
+      openSnapshotBtn.focus();
+    }
+
+    openSnapshotBtn.addEventListener("click", openSnapshot);
+    closeSnapshotBtn.addEventListener("click", closeSnapshot);
+
+    function openSchedule() {
+      scheduleModal.hidden = false;
+      closeScheduleBtn.focus();
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeSchedule() {
+      scheduleModal.hidden = true;
+      if (snapshotModal.hidden && patientInfoModal.hidden && doctorModal.hidden) {
+        document.body.style.overflow = "";
+      }
+      openScheduleBtn.focus();
+    }
+
+    openScheduleBtn.addEventListener("click", openSchedule);
+    closeScheduleBtn.addEventListener("click", closeSchedule);
+
+    function openPatientInfo() {
+      patientInfoModal.hidden = false;
+      closePatientInfoBtn.focus();
+      document.body.style.overflow = "hidden";
+    }
+
+    function closePatientInfo() {
+      patientInfoModal.hidden = true;
+      if (snapshotModal.hidden && scheduleModal.hidden && doctorModal.hidden) {
+        document.body.style.overflow = "";
+      }
+      openPatientInfoBtn.focus();
+    }
+
+    openPatientInfoBtn.addEventListener("click", openPatientInfo);
+    closePatientInfoBtn.addEventListener("click", closePatientInfo);
+
+    const doctors = {
+      dawson: {
+        name: "Dr. Rhea Dawson",
+        role: "MSK Injection Specialist · GMC Registered",
+        specialties: "Ultrasound-guided cortisone, PRP, hyaluronic acid, and spine-focused injection pathways.",
+        locations: "Manchester (primary) and Burnley (alternate weekly clinic).",
+        features: "Real-time ultrasound guidance, consent-first workflow, and GP report issued within 24 hours.",
+        session: "45-minute consult including scan review, focused exam, and treatment plan with recovery milestones."
+      },
+      clarke: {
+        name: "Aisha Clarke",
+        role: "Senior MSK Physiotherapist",
+        specialties: "Post-injection rehab, return-to-sport plans, shoulder/lumbar progression, and pain reconditioning.",
+        locations: "Manchester rehab suite and remote follow-up video consultations.",
+        features: "Structured 2-week check-ins, outcome scoring, and personalized home exercise pathways.",
+        session: "40-minute functional assessment with movement analysis and staged rehabilitation updates."
+      },
+      amir: {
+        name: "Dr. Amir Khan",
+        role: "Dual-Certified GP and Osteopath",
+        specialties: "Complex pain diagnostics, integrated manual medicine, and second-opinion care decisions.",
+        locations: "Burnley specialist clinic with referral support across both sites.",
+        features: "Pain-locator triage review, MRI/ultrasound correlation, and safe escalation for urgent findings.",
+        session: "Comprehensive case review with diagnosis clarification, procedural advice, and onward-care planning."
+      }
+    };
+
+    function openDoctorProfile(doctorId) {
+      const doctor = doctors[doctorId];
+      if (!doctor) return;
+      doctorTitle.textContent = doctor.name;
+      doctorRole.textContent = doctor.role;
+      doctorSpecialties.textContent = doctor.specialties;
+      doctorLocations.textContent = doctor.locations;
+      doctorFeatures.textContent = doctor.features;
+      doctorSession.textContent = doctor.session;
+      doctorModal.hidden = false;
+      closeDoctorBtn.focus();
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeDoctorProfile() {
+      doctorModal.hidden = true;
+      if (snapshotModal.hidden && patientInfoModal.hidden && scheduleModal.hidden) {
+        document.body.style.overflow = "";
+      }
+    }
+
+    doctorTriggers.forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        openDoctorProfile(trigger.dataset.doctor);
+      });
+    });
+
+    closeDoctorBtn.addEventListener("click", closeDoctorProfile);
+
+    snapshotModal.addEventListener("click", (event) => {
+      if (event.target === snapshotModal) {
+        closeSnapshot();
+      }
+    });
+
+    scheduleModal.addEventListener("click", (event) => {
+      if (event.target === scheduleModal) {
+        closeSchedule();
+      }
+    });
+
+    patientInfoModal.addEventListener("click", (event) => {
+      if (event.target === patientInfoModal) {
+        closePatientInfo();
+      }
+    });
+
+    doctorModal.addEventListener("click", (event) => {
+      if (event.target === doctorModal) {
+        closeDoctorProfile();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !snapshotModal.hidden) {
+        closeSnapshot();
+      }
+
+      if (event.key === "Escape" && !scheduleModal.hidden) {
+        closeSchedule();
+      }
+
+      if (event.key === "Escape" && !patientInfoModal.hidden) {
+        closePatientInfo();
+      }
+
+      if (event.key === "Escape" && !doctorModal.hidden) {
+        closeDoctorProfile();
+      }
+    });
+
+    function updatePrepStatus() {
+      const total = prepChecklist.querySelectorAll("input").length;
+      const complete = prepChecklist.querySelectorAll("input:checked").length;
+      prepStatusChip.textContent = `Prep status: ${complete} of ${total} complete`;
+    }
+
+    prepChecklist.addEventListener("change", updatePrepStatus);
+    updatePrepStatus();
+
+    const treatmentBtns = document.querySelectorAll(".treatment");
+    const dateBtns = document.querySelectorAll(".date");
+    const timeBtns = document.querySelectorAll(".time");
+
+    const sumTreatment = document.getElementById("sumTreatment");
+    const sumDate = document.getElementById("sumDate");
+    const sumTime = document.getElementById("sumTime");
+
+    function setActive(collection, target, callback) {
+      collection.forEach((item) => item.classList.remove("active"));
+      target.classList.add("active");
+      callback(target);
+    }
+
+    treatmentBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        setActive(treatmentBtns, btn, (el) => {
+          sumTreatment.textContent = el.dataset.treatment;
+        });
+      });
+    });
+
+    dateBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        setActive(dateBtns, btn, (el) => {
+          sumDate.textContent = el.dataset.date;
+        });
+      });
+    });
+
+    timeBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        setActive(timeBtns, btn, (el) => {
+          sumTime.textContent = el.dataset.time;
+        });
+      });
+    });
+
+    const bookingForm = document.getElementById("bookingForm");
+    const successState = document.getElementById("successState");
+    const okName = document.getElementById("okName");
+    const okTreatment = document.getElementById("okTreatment");
+    const okDateTime = document.getElementById("okDateTime");
+
+    bookingForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!bookingForm.checkValidity()) {
+        bookingForm.reportValidity();
+        return;
+      }
+
+      const name = document.getElementById("patientName").value.trim();
+      okName.textContent = name || "Patient";
+      okTreatment.textContent = sumTreatment.textContent;
+      okDateTime.textContent = `${sumDate.textContent} at ${sumTime.textContent}`;
+      successState.hidden = false;
+      successState.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  </script>
+</body>
+</html>
