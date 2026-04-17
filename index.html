@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Aster MSK Clinic Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --space-1: 8px;
@@ -13,26 +16,29 @@
       --space-5: 40px;
       --space-6: 48px;
 
+      --card-pad: 24px;
       --radius-s: 12px;
       --radius-m: 14px;
       --radius-l: 16px;
       --radius-xl: 20px;
 
-      --bg: #f4f8fd;
+      --bg: #f9fafb;
       --surface: #ffffff;
-      --surface-soft: #f8fbff;
-      --text: #0f172a;
-      --text-2: #334155;
-      --text-3: #64748b;
-      --primary: #2563eb;
-      --primary-2: #1d4ed8;
+      --surface-soft: #f8fafc;
+      --text: #111827;
+      --text-2: #374151;
+      --text-muted: #6b7280;
+      --text-3: #6b7280;
+      --primary: #3b82f6;
+      --primary-2: #6366f1;
       --accent: #0ea5a8;
-      --line-soft: #e4edf9;
+      --line-soft: rgba(17, 24, 39, 0.06);
 
-      --shadow-1: 0 4px 16px rgba(15, 23, 42, 0.05);
-      --shadow-2: 0 10px 24px rgba(15, 23, 42, 0.07);
-      --shadow-3: 0 20px 48px rgba(37, 99, 235, 0.12);
-      --ease: 220ms cubic-bezier(.2, .8, .2, 1);
+      --shadow-1: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --shadow-2: 0 8px 28px rgba(0, 0, 0, 0.08);
+      --shadow-3: 0 16px 48px rgba(59, 130, 246, 0.12);
+      --shadow-hover: 0 12px 36px rgba(0, 0, 0, 0.1);
+      --ease: 0.2s ease-in-out;
     }
 
     * { box-sizing: border-box; }
@@ -41,10 +47,12 @@
       margin: 0;
       padding: 0;
       font-family: Inter, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
       color: var(--text);
       background:
-        radial-gradient(circle at 86% 12%, rgba(37,99,235,.08) 0 22%, transparent 55%),
-        radial-gradient(circle at 16% 88%, rgba(14,165,168,.06) 0 19%, transparent 56%),
+        radial-gradient(ellipse 120% 80% at 100% 0%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 100% 60% at 0% 100%, rgba(99, 102, 241, 0.05) 0%, transparent 45%),
         var(--bg);
       min-height: 100%;
       -webkit-font-smoothing: antialiased;
@@ -72,7 +80,7 @@
       margin: 0 auto;
       padding: var(--space-2);
       display: grid;
-      gap: var(--space-2);
+      gap: var(--space-3);
       grid-template-columns: 1fr;
     }
 
@@ -80,13 +88,13 @@
       background: var(--surface);
       border-radius: var(--radius-l);
       box-shadow: var(--shadow-1);
-      border: 1px solid rgba(228, 237, 249, 0.85);
+      border: none;
     }
 
     .sidebar {
-      padding: var(--space-2);
+      padding: var(--card-pad);
       display: grid;
-      gap: var(--space-2);
+      gap: var(--space-3);
     }
 
     .brand {
@@ -110,14 +118,16 @@
 
     .brand h1 {
       margin: 0;
-      font-size: 1rem;
-      line-height: 1.2;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
     }
 
     .brand p {
       margin: 3px 0 0;
-      color: var(--text-3);
-      font-size: .78rem;
+      color: var(--text-muted);
+      font-size: 12px;
     }
 
     .tabs {
@@ -128,55 +138,56 @@
     }
 
     .tab {
-      border: 1px solid transparent;
-      border-radius: 12px;
+      border: none;
+      border-radius: var(--radius-s);
       background: transparent;
       color: var(--text-2);
       min-height: 44px;
-      padding: 10px 12px;
+      padding: 12px 14px;
       font: inherit;
-      font-size: .9rem;
+      font-size: 14px;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      transition: all var(--ease);
+      gap: 10px;
+      transition: transform var(--ease), box-shadow var(--ease), background var(--ease), color var(--ease);
       white-space: nowrap;
     }
 
-    .tab svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .tab svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
     .tab[aria-selected="true"] {
-      background: #ecf3ff;
-      border-color: #caddfc;
-      color: var(--primary);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(99, 102, 241, 0.08));
+      color: #1d4ed8;
+      box-shadow: 0 2px 12px rgba(59, 130, 246, 0.12);
     }
 
     .sidebar-note {
       border-radius: var(--radius-m);
-      border: 1px solid #d7e5fb;
-      background: linear-gradient(160deg, #f8fbff, #f1f7ff);
-      padding: 12px;
-      font-size: .82rem;
+      border: none;
+      background: linear-gradient(160deg, #f8fafc, #f1f5f9);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      padding: var(--space-2);
+      font-size: 13px;
       color: var(--text-2);
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     .main {
       display: grid;
-      gap: var(--space-2);
+      gap: var(--space-3);
       align-content: start;
     }
 
     .hero {
       position: relative;
       overflow: hidden;
-      padding: var(--space-3);
+      padding: var(--space-4);
       background:
-        radial-gradient(circle at 88% 12%, rgba(59,130,246,.18), transparent 45%),
-        radial-gradient(circle at 78% 98%, rgba(14,165,168,.14), transparent 50%),
-        linear-gradient(165deg, #fff, #f6faff);
-      box-shadow: var(--shadow-3);
+        radial-gradient(circle at 90% 8%, rgba(59, 130, 246, 0.12), transparent 42%),
+        radial-gradient(circle at 10% 92%, rgba(99, 102, 241, 0.1), transparent 48%),
+        linear-gradient(165deg, #ffffff 0%, #f8fafc 100%);
+      box-shadow: var(--shadow-2);
     }
 
     .hero-grid {
@@ -203,49 +214,52 @@
 
     .hero h2 {
       margin: 0;
-      font-size: clamp(1.6rem, 6vw, 2.7rem);
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-      max-width: 18ch;
+      font-size: clamp(1.5rem, 5vw, 2.25rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.035em;
+      max-width: 20ch;
     }
 
     .hero p {
-      margin: 14px 0 0;
-      font-size: 1rem;
-      color: var(--text-2);
-      line-height: 1.65;
-      max-width: 56ch;
+      margin: var(--space-2) 0 0;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 52ch;
     }
 
     .hero-actions {
       margin-top: var(--space-3);
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
     }
 
     .btn {
-      min-height: 44px;
-      border-radius: 12px;
+      min-height: 48px;
+      border-radius: 10px;
       border: 0;
       font: inherit;
-      font-size: .92rem;
+      font-size: 14px;
       font-weight: 700;
-      padding: 0 14px;
+      padding: 12px 20px;
       cursor: pointer;
-      transition: all var(--ease);
+      transition: transform var(--ease), box-shadow var(--ease), background var(--ease), color var(--ease);
     }
 
     .btn-primary {
       color: #fff;
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      box-shadow: 0 12px 26px rgba(37, 99, 235, 0.28);
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35);
     }
 
     .btn-secondary {
-      color: #1e3a8a;
+      color: #1e40af;
       background: #fff;
-      border: 1px solid #d5e3f7;
+      border: none;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
     }
 
     .hero-metrics {
@@ -257,9 +271,10 @@
       position: relative;
       overflow: hidden;
       border-radius: var(--radius-m);
-      border: 1px solid #d6e4f8;
+      border: none;
       background: #fff;
       box-shadow: var(--shadow-2);
+      transition: transform var(--ease), box-shadow var(--ease);
     }
 
     .hero-visual img {
@@ -271,16 +286,18 @@
 
     .hero-visual-badge {
       position: absolute;
-      left: 10px;
-      bottom: 10px;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid #d8e6fa;
+      left: 12px;
+      bottom: 12px;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(8px);
+      border: none;
       border-radius: 10px;
-      padding: 8px 10px;
-      font-size: .76rem;
-      color: #1e3a8a;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #1e40af;
       font-weight: 700;
       max-width: 90%;
+      box-shadow: var(--shadow-1);
     }
 
     .hero-tags {
@@ -294,43 +311,48 @@
       display: inline-flex;
       align-items: center;
       min-height: 32px;
-      padding: 0 10px;
+      padding: 0 12px;
       border-radius: 999px;
-      border: 1px solid #d9e6f8;
-      background: #ffffffd9;
-      color: #1e3a8a;
-      font-size: .75rem;
-      font-weight: 700;
+      border: none;
+      background: rgba(255, 255, 255, 0.85);
+      color: #3730a3;
+      font-size: 12px;
+      font-weight: 600;
       letter-spacing: .01em;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
     }
 
     .mini-kpi {
       border-radius: var(--radius-m);
-      background: rgba(255,255,255,.9);
-      border: 1px solid #d8e5f8;
-      padding: 12px;
+      background: rgba(255,255,255,.95);
+      border: none;
+      padding: var(--space-2);
       box-shadow: var(--shadow-1);
+      transition: transform var(--ease), box-shadow var(--ease);
     }
 
     .mini-kpi small {
       display: block;
-      font-size: .76rem;
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: .04em;
-      color: var(--text-3);
+      letter-spacing: .06em;
+      color: var(--text-muted);
       font-weight: 700;
     }
 
     .mini-kpi strong {
       display: block;
-      margin-top: 6px;
-      font-size: 1.22rem;
+      margin-top: 8px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
     }
 
     .topbar {
-      padding: 14px var(--space-2);
+      padding: var(--space-2) var(--card-pad);
       display: flex;
-      gap: 10px;
+      gap: var(--space-2);
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
@@ -338,28 +360,30 @@
 
     .topbar h3 {
       margin: 0;
-      font-size: 1.2rem;
-      letter-spacing: -0.01em;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
     }
 
     .clinic-sub {
-      margin: 0 0 5px;
-      color: var(--text-3);
-      font-size: .78rem;
+      margin: 0 0 6px;
+      color: var(--text-muted);
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: .06em;
+      letter-spacing: .08em;
       font-weight: 700;
     }
 
     .user-pill {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       border-radius: 999px;
-      border: 1px solid #d9e6fa;
+      border: none;
       background: #fff;
-      min-height: 40px;
-      padding: 4px 8px 4px 4px;
+      min-height: 44px;
+      padding: 4px 12px 4px 4px;
+      box-shadow: var(--shadow-1);
     }
 
     .avatar {
@@ -374,8 +398,8 @@
       font-weight: 700;
     }
 
-    .views { display: grid; gap: var(--space-2); }
-    .view { display: none; gap: var(--space-2); }
+    .views { display: grid; gap: var(--space-3); }
+    .view { display: none; gap: var(--space-3); }
     .view.active { display: grid; animation: fadeUp 280ms ease; }
 
     .snapshot-modal[hidden] { display: none; }
@@ -408,9 +432,9 @@
       overflow: auto;
       border-radius: var(--radius-l);
       background: #fff;
-      border: 1px solid #dbe7f7;
-      box-shadow: 0 28px 44px rgba(15, 23, 42, 0.22);
-      padding: var(--space-2);
+      border: none;
+      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.12);
+      padding: var(--card-pad);
       animation: fadeUp 220ms ease;
     }
 
@@ -432,9 +456,9 @@
       overflow: auto;
       border-radius: var(--radius-l);
       background: #fff;
-      border: 1px solid #dbe7f7;
-      box-shadow: 0 28px 44px rgba(15, 23, 42, 0.22);
-      padding: var(--space-2);
+      border: none;
+      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.12);
+      padding: var(--card-pad);
       animation: fadeUp 220ms ease;
     }
 
@@ -444,9 +468,9 @@
       overflow: auto;
       border-radius: var(--radius-l);
       background: #fff;
-      border: 1px solid #dbe7f7;
-      box-shadow: 0 28px 44px rgba(15, 23, 42, 0.22);
-      padding: var(--space-2);
+      border: none;
+      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.12);
+      padding: var(--card-pad);
       animation: fadeUp 220ms ease;
     }
 
@@ -471,17 +495,18 @@
     }
 
     .icon-btn {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       border-radius: 10px;
-      border: 1px solid #d8e6fa;
-      background: #fff;
-      color: #1e3a8a;
+      border: none;
+      background: #f3f4f6;
+      color: #374151;
       display: grid;
       place-items: center;
       cursor: pointer;
-      transition: all var(--ease);
+      transition: transform var(--ease), background var(--ease), box-shadow var(--ease);
       flex: 0 0 auto;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     .icon-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; }
@@ -494,10 +519,11 @@
     }
 
     .snapshot-item {
-      border: 1px solid #deebfa;
+      border: none;
       border-radius: 12px;
-      background: #fbfdff;
-      padding: 11px;
+      background: #f9fafb;
+      padding: 14px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
     }
 
     .snapshot-item p {
@@ -522,10 +548,11 @@
     }
 
     .snapshot-list li {
-      border: 1px solid #deebfa;
+      border: none;
       border-radius: 12px;
-      background: #fbfdff;
-      padding: 10px;
+      background: #f9fafb;
+      padding: 14px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -550,10 +577,12 @@
     }
 
     .feature-item {
-      border: 1px solid #deebfa;
+      border: none;
       border-radius: 12px;
-      background: #fbfdff;
-      padding: 11px;
+      background: #f9fafb;
+      padding: 16px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+      transition: transform var(--ease), box-shadow var(--ease);
     }
 
     .feature-item strong {
@@ -587,9 +616,9 @@
       overflow: auto;
       border-radius: var(--radius-l);
       background: #fff;
-      border: 1px solid #dbe7f7;
-      box-shadow: 0 28px 44px rgba(15, 23, 42, 0.22);
-      padding: var(--space-2);
+      border: none;
+      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.12);
+      padding: var(--card-pad);
       animation: fadeUp 220ms ease;
     }
 
@@ -602,13 +631,14 @@
     .check-item {
       display: flex;
       align-items: center;
-      gap: 8px;
-      border: 1px solid #deebfa;
+      gap: 10px;
+      border: none;
       border-radius: 10px;
-      background: #fbfdff;
-      padding: 9px 10px;
-      font-size: .82rem;
+      background: #f9fafb;
+      padding: 12px 14px;
+      font-size: 13px;
       color: var(--text-2);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
 
     .check-item input {
@@ -639,11 +669,12 @@
     }
 
     .showcase-image {
-      border-radius: 12px;
+      border-radius: var(--radius-m);
       overflow: hidden;
-      border: 1px solid #dce9f9;
+      border: none;
       background: #fff;
       box-shadow: var(--shadow-1);
+      transition: transform var(--ease), box-shadow var(--ease);
     }
 
     .showcase-image img {
@@ -669,16 +700,18 @@
 
     .testimonial {
       border-radius: 12px;
-      border: 1px solid #deebfa;
-      background: #fbfdff;
-      padding: 11px;
+      border: none;
+      background: #f9fafb;
+      padding: 16px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+      transition: transform var(--ease), box-shadow var(--ease);
     }
 
     .testimonial p {
       margin: 0;
-      color: var(--text-2);
-      font-size: .8rem;
-      line-height: 1.45;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     .testimonial strong {
@@ -690,90 +723,108 @@
 
     .kpi-grid {
       display: grid;
-      gap: var(--space-2);
+      gap: var(--space-3);
       grid-template-columns: 1fr;
     }
 
     .kpi {
-      padding: var(--space-2);
-      border-radius: var(--radius-m);
-      background: linear-gradient(180deg, #fff, #f8fbff);
-      border: 1px solid #dce8f8;
-      transition: all var(--ease);
+      padding: var(--card-pad);
+      border-radius: var(--radius-l);
+      background: linear-gradient(165deg, #ffffff 0%, #f8fafc 100%);
+      border: none;
+      box-shadow: var(--shadow-1);
+      transition: transform var(--ease), box-shadow var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #3b82f6, #6366f1);
+      opacity: 0.85;
     }
 
     .kpi-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
     }
 
     .kpi-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: #e9f2ff;
-      color: var(--primary);
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(99, 102, 241, 0.12));
+      color: #2563eb;
       display: grid;
       place-items: center;
     }
 
-    .kpi-icon svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .kpi-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
     .kpi p { margin: 0; }
-    .kpi .label { color: var(--text-3); font-size: .82rem; }
-    .kpi .value { margin-top: 7px; font-size: 1.6rem; font-weight: 750; letter-spacing: -0.02em; }
-    .kpi .trend { margin-top: 5px; color: #0f766e; font-size: .78rem; font-weight: 700; }
+    .kpi .label { color: var(--text-muted); font-size: 13px; font-weight: 600; }
+    .kpi .value { margin-top: 12px; font-size: 2rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--text); }
+    .kpi .trend { margin-top: 10px; color: #059669; font-size: 12px; font-weight: 700; }
 
     .grid-2 {
       display: grid;
-      gap: var(--space-2);
+      gap: var(--space-3);
       grid-template-columns: 1fr;
     }
 
-    .card { padding: var(--space-2); }
+    .card { padding: var(--card-pad); }
 
     .section-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
+      gap: 12px;
+      margin-bottom: var(--space-2);
       flex-wrap: wrap;
     }
 
     .section-head h4 {
       margin: 0;
-      font-size: 1.02rem;
-      letter-spacing: -0.01em;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
 
     .subtext {
-      margin: 0 0 12px;
-      color: var(--text-3);
-      font-size: .82rem;
-      line-height: 1.5;
+      margin: 0 0 var(--space-2);
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.55;
     }
 
     .insight-strip {
-      border-radius: 12px;
-      border: 1px solid #deebfa;
-      background: #fbfdff;
-      padding: 12px;
-      margin-top: 12px;
+      border-radius: var(--radius-m);
+      border: none;
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      padding: var(--space-2);
+      margin-top: var(--space-2);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
     }
 
     .insight-strip strong {
       display: block;
-      font-size: .86rem;
-      margin-bottom: 4px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text);
     }
 
     .insight-strip p {
       margin: 0;
-      color: var(--text-3);
-      font-size: .79rem;
-      line-height: 1.45;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     .link-btn {
@@ -788,16 +839,17 @@
     }
 
     .doctor-link {
-      border: 1px solid #d7e5fb;
+      border: none;
       border-radius: 999px;
-      background: #f8fbff;
-      color: #1e3a8a;
+      background: #eff6ff;
+      color: #1d4ed8;
       font: inherit;
-      font-size: .76rem;
+      font-size: 12px;
       font-weight: 700;
-      padding: 4px 9px;
+      padding: 6px 12px;
       cursor: pointer;
-      transition: all var(--ease);
+      transition: transform var(--ease), box-shadow var(--ease), background var(--ease);
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
     }
 
     .table-wrap { overflow-x: auto; }
@@ -806,18 +858,26 @@
       width: 100%;
       border-collapse: collapse;
       min-width: 640px;
-      border: 1px solid #e4edf8;
-      border-radius: 12px;
+      border: none;
+      border-radius: var(--radius-m);
       overflow: hidden;
       background: #fff;
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
     }
 
-    thead { background: #f2f7ff; }
+    thead { background: linear-gradient(180deg, #f9fafb, #f3f4f6); }
     th, td {
       text-align: left;
-      padding: 11px;
-      border-bottom: 1px solid #edf2f9;
-      font-size: .86rem;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      font-size: 13px;
+    }
+    th {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
     }
     tbody tr:last-child td { border-bottom: 0; }
     tbody tr { transition: background-color var(--ease); }
@@ -844,26 +904,72 @@
     }
 
     .queue li {
-      border-radius: 12px;
-      border: 1px solid #deebfa;
-      background: #fbfdff;
-      padding: 12px;
+      border-radius: var(--radius-m);
+      border: none;
+      background: #f9fafb;
+      padding: 16px;
       display: flex;
       justify-content: space-between;
-      gap: 10px;
-      transition: all var(--ease);
+      gap: 12px;
+      transition: transform var(--ease), box-shadow var(--ease);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
     }
 
-    .queue strong { display: block; margin-bottom: 3px; font-size: .88rem; }
-    .queue span { font-size: .8rem; color: var(--text-3); }
+    .queue strong { display: block; margin-bottom: 4px; font-size: 14px; font-weight: 700; }
+    .queue span { font-size: 13px; color: var(--text-muted); }
 
     .booking-grid, .patient-grid, .analytics-grid {
       display: grid;
-      gap: var(--space-2);
+      gap: var(--space-3);
       grid-template-columns: 1fr;
     }
 
-    .muted { margin: 4px 0 0; color: var(--text-3); font-size: .86rem; }
+    .booking-flow {
+      display: grid;
+      gap: var(--space-3);
+      margin-top: var(--space-2);
+    }
+
+    .booking-step {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--space-2);
+      align-items: start;
+      padding: var(--space-2);
+      border-radius: var(--radius-m);
+      background: #f9fafb;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .booking-step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      flex-shrink: 0;
+    }
+
+    .booking-step-title {
+      margin: 0 0 4px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .booking-step-desc {
+      margin: 0 0 var(--space-2);
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .muted { margin: 4px 0 0; color: var(--text-muted); font-size: 14px; line-height: 1.5; }
 
     .chip-grid {
       margin-top: 10px;
@@ -872,27 +978,31 @@
       grid-template-columns: 1fr;
     }
 
-    .option {
-      border: 1px solid #d9e7f8;
-      border-radius: 12px;
-      background: #fff;
-      text-align: left;
-      padding: 12px;
-      min-height: 86px;
-      cursor: pointer;
-      transition: all var(--ease);
+    .booking-step .chip-grid {
+      margin-top: 0;
     }
 
-    .option strong { display: block; margin-bottom: 4px; font-size: .88rem; }
-    .option span { color: var(--text-3); font-size: .79rem; line-height: 1.45; }
+    .option {
+      border: none;
+      border-radius: var(--radius-m);
+      background: #fff;
+      text-align: left;
+      padding: 16px;
+      min-height: 88px;
+      cursor: pointer;
+      transition: transform var(--ease), box-shadow var(--ease), background var(--ease);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .option strong { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 700; }
+    .option span { color: var(--text-muted); font-size: 12px; line-height: 1.45; }
     .option.active {
-      border-color: #a8c5f3;
-      background: #edf4ff;
-      box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.07);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(99, 102, 241, 0.06));
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.18), 0 0 0 2px rgba(59, 130, 246, 0.35);
     }
 
     .picker-block { margin-top: var(--space-2); }
-    .picker-block p { margin: 0 0 8px; color: var(--text-3); font-size: .82rem; font-weight: 700; }
+    .picker-block p { margin: 0 0 10px; color: var(--text); font-size: 13px; font-weight: 700; }
 
     .pill-grid {
       display: grid;
@@ -901,16 +1011,17 @@
     }
 
     .pill {
-      border-radius: 11px;
-      border: 1px solid #d5e5f9;
+      border-radius: 10px;
+      border: none;
       background: #fff;
-      min-height: 44px;
+      min-height: 48px;
       cursor: pointer;
       font: inherit;
-      font-size: .8rem;
+      font-size: 13px;
       font-weight: 700;
-      color: #1e3a8a;
-      transition: all var(--ease);
+      color: #1e40af;
+      transition: transform var(--ease), box-shadow var(--ease), background var(--ease), color var(--ease);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     }
 
     .pill small {
@@ -922,30 +1033,38 @@
     }
 
     .pill.active {
-      background: #e9f2ff;
-      border-color: #9ec0ef;
-      color: var(--primary);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(99, 102, 241, 0.12));
+      color: #1d4ed8;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
     }
 
     .summary {
-      border-radius: 12px;
-      border: 1px solid #dce9f9;
-      background: #f8fbff;
-      padding: 12px;
-      margin-bottom: 12px;
+      border-radius: var(--radius-m);
+      border: none;
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      padding: var(--space-2);
+      margin-bottom: var(--space-2);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
     }
 
     .summary p {
-      margin: 4px 0;
-      font-size: .83rem;
+      margin: 6px 0;
+      font-size: 13px;
       color: var(--text-2);
     }
 
-    .summary strong { color: #1e3a8a; }
+    .summary strong { color: #1e40af; font-weight: 700; }
 
     .form {
       display: grid;
-      gap: 12px;
+      gap: var(--space-2);
+    }
+
+    .form .btn-primary {
+      width: 100%;
+      margin-top: 4px;
+      min-height: 52px;
+      font-size: 15px;
     }
 
     .field {
@@ -955,23 +1074,35 @@
 
     .input {
       width: 100%;
-      border: 1px solid #cedff4;
-      border-radius: 12px;
-      background: #fff;
+      border: none;
+      border-radius: var(--radius-m);
+      background: #f9fafb;
       font: inherit;
-      font-size: .92rem;
+      font-size: 14px;
       color: var(--text);
-      padding: 18px 12px 10px;
-      min-height: 48px;
-      transition: all var(--ease);
+      padding: 20px 14px 10px;
+      min-height: 52px;
+      transition: background var(--ease), box-shadow var(--ease);
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+    }
+
+    .input:hover {
+      background: #fff;
+      box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.2);
+    }
+
+    .input:focus {
+      outline: none;
+      background: #fff;
+      box-shadow: inset 0 0 0 2px rgba(59, 130, 246, 0.45), 0 4px 16px rgba(59, 130, 246, 0.12);
     }
 
     .float {
       position: absolute;
-      left: 12px;
-      top: 17px;
-      font-size: .86rem;
-      color: var(--text-3);
+      left: 14px;
+      top: 19px;
+      font-size: 14px;
+      color: var(--text-muted);
       pointer-events: none;
       transition: all var(--ease);
       background: linear-gradient(180deg, rgba(255, 255, 255, 0), #fff 35%);
@@ -987,13 +1118,14 @@
     }
 
     .success {
-      margin-top: 12px;
-      border-radius: 12px;
-      border: 1px solid #bae6fd;
-      background: #f0f9ff;
-      padding: 12px;
+      margin-top: var(--space-2);
+      border-radius: var(--radius-m);
+      border: none;
+      background: linear-gradient(135deg, #eff6ff, #f0f9ff);
+      padding: var(--space-2);
       display: grid;
-      gap: 5px;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(14, 165, 233, 0.12);
     }
 
     .success[hidden] { display: none; }
@@ -1002,13 +1134,19 @@
 
     .stat-grid { display: grid; gap: 10px; }
     .stat {
-      border-radius: 12px;
-      border: 1px solid #deebfa;
-      background: #fbfdff;
-      padding: 11px;
+      border-radius: var(--radius-m);
+      border: none;
+      background: #f9fafb;
+      padding: 14px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      transition: transform var(--ease), box-shadow var(--ease);
     }
-    .stat p { margin: 0; color: var(--text-3); font-size: .8rem; }
-    .stat strong { display: block; margin-top: 3px; font-size: .92rem; }
+    .stat--highlight {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(99, 102, 241, 0.05));
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.12);
+    }
+    .stat p { margin: 0; color: var(--text-muted); font-size: 12px; font-weight: 600; }
+    .stat strong { display: block; margin-top: 6px; font-size: 14px; font-weight: 700; line-height: 1.35; }
 
     .follow-up {
       margin-top: 12px;
@@ -1045,11 +1183,12 @@
 
     .timeline li {
       position: relative;
-      border: 1px solid #deebfa;
-      border-radius: 12px;
-      background: #fbfdff;
-      padding: 11px 11px 11px 30px;
-      transition: all var(--ease);
+      border: none;
+      border-radius: var(--radius-m);
+      background: #fff;
+      padding: 16px 16px 16px 36px;
+      transition: transform var(--ease), box-shadow var(--ease);
+      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.06);
     }
 
     .timeline li::before {
@@ -1064,18 +1203,19 @@
       background: #fff;
     }
 
-    .timeline h5 { margin: 0 0 4px; font-size: .88rem; }
-    .timeline p { margin: 0; color: var(--text-3); font-size: .8rem; line-height: 1.45; }
+    .timeline h5 { margin: 0 0 6px; font-size: 14px; font-weight: 700; }
+    .timeline p { margin: 0; color: var(--text-muted); font-size: 13px; line-height: 1.5; }
 
     .notes {
-      margin-top: 12px;
-      border: 1px dashed #c6dcf7;
-      border-radius: 12px;
-      background: #fff;
-      padding: 12px;
+      margin-top: var(--space-2);
+      border: none;
+      border-radius: var(--radius-m);
+      background: #f9fafb;
+      padding: var(--space-2);
+      box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.12);
     }
-    .notes h5 { margin: 0 0 7px; font-size: .88rem; }
-    .notes p { margin: 0; color: var(--text-2); font-size: .81rem; line-height: 1.5; }
+    .notes h5 { margin: 0 0 8px; font-size: 14px; font-weight: 700; }
+    .notes p { margin: 0; color: var(--text-muted); font-size: 13px; line-height: 1.55; }
 
     .metric-grid {
       display: grid;
@@ -1085,20 +1225,45 @@
     }
 
     .metric {
-      border-radius: 12px;
-      border: 1px solid #deebfa;
-      background: #fbfdff;
-      padding: 11px;
+      border-radius: var(--radius-m);
+      border: none;
+      background: #f9fafb;
+      padding: 16px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
     }
-    .metric p { margin: 0; color: var(--text-3); font-size: .8rem; }
-    .metric strong { display: block; margin-top: 3px; font-size: 1.08rem; }
+    .metric p { margin: 0; color: var(--text-muted); font-size: 12px; font-weight: 600; }
+    .metric strong { display: block; margin-top: 6px; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; }
+
+    .sparkline-wrap {
+      margin-bottom: var(--space-3);
+      padding: var(--space-2);
+      border-radius: var(--radius-m);
+      background: linear-gradient(180deg, #ffffff, #f9fafb);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .sparkline-wrap p {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+
+    .sparkline {
+      width: 100%;
+      height: 56px;
+      display: block;
+    }
 
     .bar-chart {
-      height: 210px;
-      border: 1px solid #e0ebf8;
-      border-radius: 12px;
-      background: linear-gradient(180deg, #fff, #f9fcff);
-      padding: 16px 10px 10px;
+      height: 220px;
+      border: none;
+      border-radius: var(--radius-m);
+      background: linear-gradient(180deg, #ffffff, #f9fafb);
+      padding: 20px 14px 14px;
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
       display: grid;
       grid-template-columns: repeat(7, minmax(0, 1fr));
       gap: 8px;
@@ -1117,28 +1282,29 @@
       height: calc(var(--val) * 1%);
       min-height: 20px;
       border-radius: 8px 8px 5px 5px;
-      background: linear-gradient(180deg, #60a5fa, #2563eb);
+      background: linear-gradient(180deg, #60a5fa, #4f46e5);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35);
       transition: transform var(--ease);
     }
 
-    .bar-item span { font-size: .72rem; color: var(--text-3); font-weight: 700; }
+    .bar-item span { font-size: 11px; color: var(--text-muted); font-weight: 700; }
 
     .donut-wrap {
-      border: 1px solid #e0ebf8;
-      border-radius: 12px;
+      border: none;
+      border-radius: var(--radius-l);
       background: #fff;
-      padding: 14px;
+      padding: var(--card-pad);
       display: grid;
-      gap: 12px;
+      gap: var(--space-2);
+      box-shadow: var(--shadow-1);
     }
 
     .donut {
       margin: 0 auto;
-      width: 122px;
-      height: 122px;
+      width: 128px;
+      height: 128px;
       border-radius: 999px;
-      background: conic-gradient(#2563eb 0 67%, #bfdbfe 67% 100%);
+      background: conic-gradient(#3b82f6 0 67%, #c7d2fe 67% 100%);
       display: grid;
       place-items: center;
       position: relative;
@@ -1164,27 +1330,29 @@
     .progress-list { display: grid; gap: 8px; }
     .progress-list span { display: block; font-size: .79rem; color: var(--text-2); font-weight: 600; margin-bottom: 3px; }
     .track { height: 8px; border-radius: 999px; background: #e2ecf9; overflow: hidden; }
-    .fill { height: 100%; width: var(--pct); border-radius: inherit; background: linear-gradient(90deg, #60a5fa, #2563eb); }
+    .fill { height: 100%; width: var(--pct); border-radius: inherit; background: linear-gradient(90deg, #3b82f6, #6366f1); }
 
     button:focus-visible, .input:focus-visible, .tab:focus-visible {
       outline: none;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.28);
     }
 
     .btn:active { transform: translateY(1px); }
 
     @media (hover: hover) and (pointer: fine) {
-      .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 14px 28px rgba(37, 99, 235, .34); }
-      .btn-secondary:hover { border-color: #bfd2f3; background: #fff; }
-      .doctor-link:hover { background: #edf4ff; border-color: #a8c5f3; }
-      .tab:hover:not([aria-selected="true"]) { border-color: #d8e6fa; background: #f8fbff; }
-      .kpi:hover, .queue li:hover, .timeline li:hover, .option:hover {
-        transform: translateY(-1px);
-        box-shadow: var(--shadow-2);
+      .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(59, 130, 246, 0.4); }
+      .btn-secondary:hover { transform: translateY(-1px); box-shadow: var(--shadow-hover); background: #fff; }
+      .doctor-link:hover { transform: translateY(-1px); background: #dbeafe; box-shadow: 0 4px 14px rgba(59, 130, 246, 0.25); }
+      .icon-btn:hover { transform: translateY(-1px); background: #e5e7eb; box-shadow: var(--shadow-1); }
+      .tab:hover:not([aria-selected="true"]) { background: #f3f4f6; transform: translateY(-1px); }
+      .kpi:hover, .queue li:hover, .timeline li:hover, .option:hover, .mini-kpi:hover, .showcase-image:hover, .testimonial:hover, .feature-item:hover, .stat:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-hover);
       }
-      tbody tr:hover { background: #f8fbff; }
-      .pill:hover { background: #f3f8ff; border-color: #a8c5f3; }
+      tbody tr:hover { background: #f9fafb; }
+      .pill:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08); }
       .bar:hover { transform: scaleY(1.04); }
+      .hero-visual:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
     }
 
     @media (min-width: 680px) {
@@ -1386,13 +1554,13 @@
                     <tr>
                       <td>09:00</td>
                       <td>Emma Patel</td>
-                      <td>Cortisone Shoulder Injection</td>
+                      <td>Joint Injection · Right Knee</td>
                       <td><button class="doctor-link doctor-trigger" type="button" data-doctor="dawson">Dr. Dawson</button></td>
                       <td><span class="badge confirmed">Confirmed</span></td>
                     </tr>
                     <tr>
                       <td>10:30</td>
-                      <td>Lucas Nguyen</td>
+                      <td>James O'Connor</td>
                       <td>PRP Knee Injection</td>
                       <td><button class="doctor-link doctor-trigger" type="button" data-doctor="dawson">Dr. Dawson</button></td>
                       <td><span class="badge pending">Pending Consent</span></td>
@@ -1406,8 +1574,8 @@
                     </tr>
                     <tr>
                       <td>15:15</td>
-                      <td>Michael Reed</td>
-                      <td>Post-Injection Review</td>
+                      <td>Charlotte Hughes</td>
+                      <td>Follow-up Session</td>
                       <td><button class="doctor-link doctor-trigger" type="button" data-doctor="clarke">A. Clarke, MSK Physio</button></td>
                       <td><span class="badge completed">Completed</span></td>
                     </tr>
@@ -1422,21 +1590,21 @@
                 <li>
                   <div>
                     <strong>Sophia Ahmed</strong>
-                    <span>Post-PRP mobility check</span>
+                    <span>Post-PRP mobility check · Follow-up Session</span>
                   </div>
                   <span>11:45</span>
                 </li>
                 <li>
                   <div>
                     <strong>Daniel Evans</strong>
-                    <span>Injection consent final review</span>
+                    <span>Joint Injection consent review</span>
                   </div>
                   <span>14:10</span>
                 </li>
                 <li>
                   <div>
                     <strong>Mia Harrison</strong>
-                    <span>Lumbar rehab progress checkpoint</span>
+                    <span>Lumbar rehab progress · Follow-up Session</span>
                   </div>
                   <span>16:30</span>
                 </li>
@@ -1506,59 +1674,85 @@
               <p class="muted">Select treatment, choose schedule, and confirm in one clean flow.</p>
               <p class="subtext">Includes pain-locator intake, consent status checks, and optional GP summary sharing after treatment.</p>
 
-              <div class="chip-grid" aria-label="Treatment options">
-                <button class="option active treatment" type="button" data-treatment="Cortisone Injection">
-                  <strong>Cortisone Injection</strong>
-                  <span>Rapid inflammation control for acute joint flare and pain reduction.</span>
-                </button>
-                <button class="option treatment" type="button" data-treatment="Hyaluronic Injection">
-                  <strong>Hyaluronic Injection</strong>
-                  <span>Improves joint lubrication to support low-impact mobility and comfort.</span>
-                </button>
-                <button class="option treatment" type="button" data-treatment="PRP Therapy">
-                  <strong>PRP Therapy</strong>
-                  <span>Autologous platelet treatment for tendon and soft tissue healing support.</span>
-                </button>
-                <button class="option treatment" type="button" data-treatment="Trigger Point Injection">
-                  <strong>Trigger Point Injection</strong>
-                  <span>Relieves focal muscle spasm and chronic myofascial pain patterns.</span>
-                </button>
-                <button class="option treatment" type="button" data-treatment="Caudal Epidural Injection">
-                  <strong>Caudal Epidural Injection</strong>
-                  <span>For severe lower back or sciatica flares under specialist assessment.</span>
-                </button>
-                <button class="option treatment" type="button" data-treatment="Facet Joint Injection">
-                  <strong>Facet Joint Injection</strong>
-                  <span>Targeted spine pain management with imaging-guided precision.</span>
-                </button>
-              </div>
-
-              <div class="picker-block">
-                <p>Choose Date</p>
-                <div class="pill-grid">
-                  <button class="pill date active" type="button" data-date="Mon 20 Apr">Mon <small>20 Apr</small></button>
-                  <button class="pill date" type="button" data-date="Tue 21 Apr">Tue <small>21 Apr</small></button>
-                  <button class="pill date" type="button" data-date="Wed 22 Apr">Wed <small>22 Apr</small></button>
-                  <button class="pill date" type="button" data-date="Thu 23 Apr">Thu <small>23 Apr</small></button>
-                  <button class="pill date" type="button" data-date="Fri 24 Apr">Fri <small>24 Apr</small></button>
-                  <button class="pill date" type="button" data-date="Mon 27 Apr">Mon <small>27 Apr</small></button>
+              <div class="booking-flow">
+                <div class="booking-step">
+                  <span class="booking-step-num" aria-hidden="true">1</span>
+                  <div>
+                    <h5 class="booking-step-title">Choose treatment</h5>
+                    <p class="booking-step-desc">Pick the procedure type. Ultrasound-guided options are flagged at check-in.</p>
+                    <div class="chip-grid" aria-label="Treatment options">
+                      <button class="option active treatment" type="button" data-treatment="Cortisone Injection">
+                        <strong>Cortisone Injection</strong>
+                        <span>Rapid inflammation control for acute joint flare and pain reduction.</span>
+                      </button>
+                      <button class="option treatment" type="button" data-treatment="Hyaluronic Injection">
+                        <strong>Hyaluronic Injection</strong>
+                        <span>Improves joint lubrication to support low-impact mobility and comfort.</span>
+                      </button>
+                      <button class="option treatment" type="button" data-treatment="PRP Therapy">
+                        <strong>PRP Therapy</strong>
+                        <span>Autologous platelet treatment for tendon and soft tissue healing support.</span>
+                      </button>
+                      <button class="option treatment" type="button" data-treatment="Trigger Point Injection">
+                        <strong>Trigger Point Injection</strong>
+                        <span>Relieves focal muscle spasm and chronic myofascial pain patterns.</span>
+                      </button>
+                      <button class="option treatment" type="button" data-treatment="Joint Injection">
+                        <strong>Joint Injection</strong>
+                        <span>Targeted intra-articular relief for knee, shoulder, or hip under imaging guidance.</span>
+                      </button>
+                      <button class="option treatment" type="button" data-treatment="Caudal Epidural Injection">
+                        <strong>Caudal Epidural Injection</strong>
+                        <span>For severe lower back or sciatica flares under specialist assessment.</span>
+                      </button>
+                      <button class="option treatment" type="button" data-treatment="Facet Joint Injection">
+                        <strong>Facet Joint Injection</strong>
+                        <span>Targeted spine pain management with imaging-guided precision.</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
 
-              <div class="picker-block">
-                <p>Choose Time</p>
-                <div class="pill-grid">
-                  <button class="pill time active" type="button" data-time="09:30">09:30</button>
-                  <button class="pill time" type="button" data-time="10:15">10:15</button>
-                  <button class="pill time" type="button" data-time="11:30">11:30</button>
-                  <button class="pill time" type="button" data-time="13:15">13:15</button>
-                  <button class="pill time" type="button" data-time="15:00">15:00</button>
-                  <button class="pill time" type="button" data-time="16:30">16:30</button>
+                <div class="booking-step">
+                  <span class="booking-step-num" aria-hidden="true">2</span>
+                  <div>
+                    <h5 class="booking-step-title">Pick date &amp; time</h5>
+                    <p class="booking-step-desc">Real-time availability across Manchester and Burnley rooms.</p>
+                    <div class="picker-block">
+                      <p>Choose Date</p>
+                      <div class="pill-grid">
+                        <button class="pill date active" type="button" data-date="Mon 20 Apr">Mon <small>20 Apr</small></button>
+                        <button class="pill date" type="button" data-date="Tue 21 Apr">Tue <small>21 Apr</small></button>
+                        <button class="pill date" type="button" data-date="Wed 22 Apr">Wed <small>22 Apr</small></button>
+                        <button class="pill date" type="button" data-date="Thu 23 Apr">Thu <small>23 Apr</small></button>
+                        <button class="pill date" type="button" data-date="Fri 24 Apr">Fri <small>24 Apr</small></button>
+                        <button class="pill date" type="button" data-date="Mon 27 Apr">Mon <small>27 Apr</small></button>
+                      </div>
+                    </div>
+                    <div class="picker-block">
+                      <p>Choose Time</p>
+                      <div class="pill-grid">
+                        <button class="pill time active" type="button" data-time="09:30">09:30</button>
+                        <button class="pill time" type="button" data-time="10:15">10:15</button>
+                        <button class="pill time" type="button" data-time="11:30">11:30</button>
+                        <button class="pill time" type="button" data-time="13:15">13:15</button>
+                        <button class="pill time" type="button" data-time="15:00">15:00</button>
+                        <button class="pill time" type="button" data-time="16:30">16:30</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </article>
 
             <article class="card">
+              <div class="booking-step" style="margin-bottom: var(--space-2);">
+                <span class="booking-step-num" aria-hidden="true">3</span>
+                <div>
+                  <h5 class="booking-step-title">Details &amp; confirm</h5>
+                  <p class="booking-step-desc">Review the summary, enter contact details, and confirm the appointment.</p>
+                </div>
+              </div>
               <div class="summary">
                 <p><strong>Treatment:</strong> <span id="sumTreatment">Cortisone Injection</span></p>
                 <p><strong>Date:</strong> <span id="sumDate">Mon 20 Apr</span></p>
@@ -1607,7 +1801,7 @@
                   <p>Contact</p>
                   <strong>+44 7799 112233 · olivia.carter@email.com</strong>
                 </div>
-                <div class="stat">
+                <div class="stat stat--highlight">
                   <p>Last Visit</p>
                   <strong>04 Apr 2026 · PRP Shoulder Injection</strong>
                 </div>
@@ -1631,7 +1825,7 @@
                   <p>Pain score reduced from 6/10 to 3/10. Continue graded loading and scapular control work.</p>
                 </li>
                 <li>
-                  <h5>21 Mar 2026 · Trigger Point Injection</h5>
+                  <h5>21 Mar 2026 · Joint Injection (Upper Trapezius)</h5>
                   <p>Marked reduction in upper trapezius tenderness and improved overhead range of motion.</p>
                 </li>
                 <li>
@@ -1654,6 +1848,19 @@
               <div class="metric-grid">
                 <div class="metric"><p>Bookings This Week</p><strong>84</strong></div>
                 <div class="metric"><p>Repeat Patients</p><strong>67%</strong></div>
+              </div>
+              <div class="sparkline-wrap">
+                <p>Booking trend (last 14 days)</p>
+                <svg class="sparkline" viewBox="0 0 320 56" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="rgba(59,130,246,0.35)"/>
+                      <stop offset="100%" stop-color="rgba(99,102,241,0)"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M0,44 L28,40 L56,38 L84,32 L112,28 L140,30 L168,22 L196,26 L224,18 L252,20 L280,14 L308,10 L320,8 L320,56 L0,56 Z" fill="url(#sparkFill)"/>
+                  <path d="M0,44 L28,40 L56,38 L84,32 L112,28 L140,30 L168,22 L196,26 L224,18 L252,20 L280,14 L308,10 L320,8" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </div>
               <div class="section-head"><h4>Weekly Booking Distribution</h4></div>
               <div class="bar-chart" aria-label="Bookings by weekday">
@@ -1747,7 +1954,7 @@
       <ul class="snapshot-list">
         <li>
           <div>
-            <strong>10:30 · Lucas Nguyen</strong>
+            <strong>10:30 · James O'Connor</strong>
             <span>PRP knee injection requires final consent signature.</span>
           </div>
           <span class="badge pending">Action</span>
@@ -1797,14 +2004,14 @@
             <tr>
               <td>09:00</td>
               <td>Emma Patel</td>
-              <td>Cortisone Shoulder Injection</td>
+              <td>Joint Injection · Right Knee</td>
               <td><button class="doctor-link doctor-trigger" type="button" data-doctor="dawson">Dr. Dawson</button></td>
               <td>US Suite 1</td>
               <td><span class="badge confirmed">Confirmed</span></td>
             </tr>
             <tr>
               <td>10:30</td>
-              <td>Lucas Nguyen</td>
+              <td>James O'Connor</td>
               <td>PRP Knee Injection</td>
               <td><button class="doctor-link doctor-trigger" type="button" data-doctor="dawson">Dr. Dawson</button></td>
               <td>US Suite 1</td>
@@ -1820,8 +2027,8 @@
             </tr>
             <tr>
               <td>15:15</td>
-              <td>Michael Reed</td>
-              <td>Post-Injection Review</td>
+              <td>Charlotte Hughes</td>
+              <td>Follow-up Session</td>
               <td><button class="doctor-link doctor-trigger" type="button" data-doctor="clarke">A. Clarke</button></td>
               <td>MSK Rehab Room</td>
               <td><span class="badge completed">Completed</span></td>
