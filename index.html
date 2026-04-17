@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>My MSK Clinic — Musculoskeletal care in Burnley</title>
+  <title>MyMSK Clinic — Musculoskeletal care in Burnley</title>
   <meta name="description" content="Private MSK clinic for back, joint and muscle pain. In-house ultrasound and ultrasound-guided injections. Dual-qualified GP and osteopath.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <style>
-    /* ——— Design system: My MSK Clinic (demo) ——— */
+    /* ——— Design system: MyMSK Clinic (demo) ——— */
     :root {
       --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
       --font-display: "Fraunces", "Georgia", serif;
@@ -320,37 +320,74 @@
     .care-panel__title { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 var(--space-1); }
     .care-panel__headline { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; color: var(--ink); margin: 0; }
 
-    .practice-insights {
+    .insight-card {
       position: relative;
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-3);
       margin-bottom: var(--space-5);
-      padding: var(--space-4);
-      background: color-mix(in srgb, var(--warn-soft) 55%, var(--surface));
-      border: 1px solid var(--line);
+      padding: var(--space-4) var(--space-5);
+      background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 6%, var(--surface)) 0%, var(--surface) 55%);
+      border: 1px solid color-mix(in srgb, var(--accent) 12%, var(--line));
       border-radius: var(--radius-sm);
-    }
-    .practice-insights__item {
-      flex: 1;
-      min-width: 140px;
       display: flex;
-      flex-direction: column;
-      gap: var(--space-1);
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-4);
     }
-    .practice-insights__k {
-      font-size: 0.6875rem;
+    .insight-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: var(--space-3);
+      bottom: var(--space-3);
+      width: 3px;
+      border-radius: 0 2px 2px 0;
+      background: var(--accent);
+      opacity: 0.35;
+    }
+    .insight-card__body { min-width: 0; }
+    .insight-card__eyebrow {
+      font-size: 0.625rem;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
+      margin: 0 0 var(--space-2);
     }
-    .practice-insights__v {
+    .insight-card__label {
+      margin: 0;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      line-height: 1.35;
+      max-width: 22ch;
+    }
+    .insight-card__note {
+      margin: var(--space-2) 0 0;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .insight-card__metric {
+      flex-shrink: 0;
+      text-align: right;
+      padding: var(--space-2) 0 0;
+    }
+    .insight-card__val {
       font-family: var(--font-display);
-      font-size: 1.5rem;
+      font-size: 2rem;
       font-weight: 600;
       color: var(--ink);
       line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .insight-card__unit {
+      display: block;
+      margin-top: var(--space-1);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
     .metric-pill {
@@ -598,38 +635,114 @@
       .cta-block { grid-template-columns: 1fr 1fr; align-items: start; }
     }
 
-    .form-stepper {
-      display: flex;
-      gap: var(--space-4);
+    .booking-flow__head {
       margin-bottom: var(--space-5);
     }
+    .booking-flow__title {
+      margin: 0 0 var(--space-1);
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+    .booking-flow__progress {
+      margin: 0;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+
+    /* Premium horizontal stepper */
+    .form-stepper {
+      list-style: none;
+      margin: 0 0 var(--space-5);
+      padding: 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+    }
+    .form-stepper > li { list-style: none; margin: 0; padding: 0; }
     .form-stepper__col {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: var(--space-2);
+      align-items: center;
+      text-align: center;
       min-width: 0;
+      position: relative;
     }
-    .form-stepper__bar {
-      height: 3px;
-      border-radius: 999px;
+    .form-stepper__col:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: calc(50% + 22px);
+      right: calc(-50% + 22px);
+      height: 2px;
       background: var(--line);
-      transition: background var(--dur) var(--ease);
+      border-radius: 999px;
+      z-index: 0;
     }
-    .form-stepper__col.is-done .form-stepper__bar { background: var(--accent); }
-    .form-stepper__col.is-current .form-stepper__bar {
-      background: color-mix(in srgb, var(--accent) 45%, var(--line));
+    .form-stepper__col.is-done:not(:last-child)::after {
+      background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 55%, var(--line)));
     }
+    .form-stepper__node {
+      position: relative;
+      z-index: 1;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--muted);
+      background: var(--surface-2);
+      border: 2px solid var(--line-strong);
+      transition: color var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+    }
+    .form-stepper__col.is-done .form-stepper__node {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 0 4px var(--accent-soft);
+    }
+    .form-stepper__col.is-current .form-stepper__node {
+      background: #fff;
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft), var(--shadow-sm);
+      transform: scale(1.06);
+    }
+    .form-stepper__col.is-done.is-current .form-stepper__node {
+      background: var(--accent);
+      color: #fff;
+    }
+    .form-stepper__kicker {
+      margin-top: var(--space-3);
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-stepper__col.is-current .form-stepper__kicker { color: var(--accent); }
     .form-stepper__label {
-      font-size: 0.6875rem;
+      margin-top: var(--space-1);
+      font-size: 0.75rem;
       font-weight: 600;
       color: var(--muted);
       line-height: 1.35;
       letter-spacing: 0.01em;
+      padding-inline: var(--space-1);
     }
-    .form-stepper__col.is-done .form-stepper__label,
-    .form-stepper__col.is-current .form-stepper__label {
-      color: var(--ink);
+    .form-stepper__col.is-current .form-stepper__label { color: var(--ink); }
+    .form-stepper__col.is-done:not(.is-current) .form-stepper__label { color: var(--ink-2); }
+
+    @media (max-width: 520px) {
+      .form-stepper__label { font-size: 0.6875rem; }
+      .form-stepper__kicker { letter-spacing: 0.08em; }
     }
 
     .field { margin-bottom: var(--space-4); }
@@ -798,15 +911,15 @@
 
   <header class="site-header" id="header">
     <div class="wrap site-header__inner">
-      <a class="brand" href="#" aria-label="My MSK Clinic — MSK Clinic Dashboard home">
+      <a class="brand" href="#" aria-label="MyMSK Clinic — MyMSK Clinic Dashboard home">
         <svg class="brand__mark" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-          <rect width="40" height="40" rx="12" fill="#161412"/>
-          <path d="M11 26V14h3.2l2.9 5.1h.1L20 14h3.1v12h-2.8v-6.3h-.1l-2.2 3.9h-1.8l-2.2-3.9h-.1V26H11z" fill="#e8f5f3"/>
-          <path d="M25.5 14H29l2.5 4.4V14h2.7v12H30l-2.6-4.5V26h-2.8V14h.9z" fill="#e8f5f3" opacity=".85"/>
+          <rect width="40" height="40" rx="12" fill="#1a5c54"/>
+          <path d="M11 26V14h3.2l2.9 5.1h.1L20 14h3.1v12h-2.8v-6.3h-.1l-2.2 3.9h-1.8l-2.2-3.9h-.1V26H11z" fill="#fff"/>
+          <path d="M25.5 14H29l2.5 4.4V14h2.7v12H30l-2.6-4.5V26h-2.8V14h.9z" fill="#fff" opacity=".88"/>
         </svg>
         <span class="brand__text">
-          <span class="brand__name">My MSK Clinic</span>
-          <span class="brand__product">MSK Clinic Dashboard</span>
+          <span class="brand__name">MyMSK Clinic</span>
+          <span class="brand__product">MyMSK Clinic Dashboard</span>
           <span class="brand__tag">Burnley · Manchester patients welcome</span>
         </span>
       </a>
@@ -819,7 +932,7 @@
         <a href="#faq">FAQ</a>
       </nav>
       <div class="header-actions">
-        <a class="btn btn--ghost btn--sm" href="tel:03337729655" aria-label="Call My MSK Clinic on 0333 772 9655"><span class="phone-full">0333 772 9655</span><span class="phone-short">Call</span></a>
+        <a class="btn btn--ghost btn--sm" href="tel:03337729655" aria-label="Call MyMSK Clinic on 0333 772 9655"><span class="phone-full">0333 772 9655</span><span class="phone-short">Call</span></a>
         <a class="btn btn--primary btn--sm" href="#book">Book</a>
         <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="drawer" id="menuBtn" aria-label="Open menu">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -850,7 +963,7 @@
         <div>
           <p class="eyebrow">Musculoskeletal clinic · Burnley</p>
           <h1 id="hero-title">Serious relief for back, joint and muscle pain—guided with precision.</h1>
-          <p class="hero__lead">My MSK Clinic combines osteopathic assessment with modern diagnostic ultrasound and ultrasound-guided injections, so your care is clearer, more accurate, and easier to trust.</p>
+          <p class="hero__lead">MyMSK Clinic combines osteopathic assessment with modern diagnostic ultrasound and ultrasound-guided injections, so your care is clearer, more accurate, and easier to trust.</p>
           <div class="hero__actions">
             <a class="btn btn--primary" href="#book">Book consultation</a>
             <a class="btn btn--ghost" href="#treatments">Explore treatments</a>
@@ -881,16 +994,17 @@
               <span>Google reviews</span>
             </div>
           </div>
-          <div class="practice-insights" aria-label="Practice operations preview">
-            <div class="practice-insights__item">
-              <span class="practice-insights__k">Missed appointments this week</span>
-              <span class="practice-insights__v">3</span>
+          <aside class="insight-card" aria-label="Practice snapshot">
+            <div class="insight-card__body">
+              <p class="insight-card__eyebrow">Practice pulse</p>
+              <p class="insight-card__label">New enquiries awaiting response</p>
+              <p class="insight-card__note">Illustrative for this demo—connect to your inbox or CRM to surface the real queue.</p>
             </div>
-            <div class="practice-insights__item">
-              <span class="practice-insights__k">Follow-ups due</span>
-              <span class="practice-insights__v">5</span>
+            <div class="insight-card__metric">
+              <span class="insight-card__val">4</span>
+              <span class="insight-card__unit">This week</span>
             </div>
-          </div>
+          </aside>
           <div class="panel-grid">
             <div class="mini-card">
               <div class="mini-card__label">In-house imaging</div>
@@ -1044,7 +1158,7 @@
           </div>
         </div>
         <div>
-          <p>Patients come to My MSK Clinic when they want someone to take symptoms seriously, explain imaging in plain language, and offer advanced options without losing a grounded, respectful bedside manner.</p>
+          <p>Patients come to MyMSK Clinic when they want someone to take symptoms seriously, explain imaging in plain language, and offer advanced options without losing a grounded, respectful bedside manner.</p>
           <ul class="cred-list">
             <li>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
@@ -1138,23 +1252,30 @@
         </div>
         <div>
           <form id="enquiryForm" novalidate>
-            <div class="form-stepper" role="group" aria-label="Booking steps">
-              <div class="form-stepper__col is-done is-current" data-stepper="1">
-                <span class="form-stepper__bar" aria-hidden="true"></span>
-                <span class="form-stepper__label">Step 1: Select Treatment</span>
-              </div>
-              <div class="form-stepper__col" data-stepper="2">
-                <span class="form-stepper__bar" aria-hidden="true"></span>
-                <span class="form-stepper__label">Step 2: Choose Time</span>
-              </div>
-              <div class="form-stepper__col" data-stepper="3">
-                <span class="form-stepper__bar" aria-hidden="true"></span>
-                <span class="form-stepper__label">Step 3: Confirm</span>
-              </div>
+            <div class="booking-flow__head">
+              <h3 class="booking-flow__title">Book your visit</h3>
+              <p class="booking-flow__progress" id="bookingFlowProgress" aria-live="polite">Step 1 of 3 — Select treatment</p>
             </div>
+            <ol class="form-stepper" aria-label="Booking progress">
+              <li class="form-stepper__col is-current" data-stepper="1">
+                <span class="form-stepper__node" aria-hidden="true">1</span>
+                <span class="form-stepper__kicker">Step 1</span>
+                <span class="form-stepper__label">Select treatment</span>
+              </li>
+              <li class="form-stepper__col" data-stepper="2">
+                <span class="form-stepper__node" aria-hidden="true">2</span>
+                <span class="form-stepper__kicker">Step 2</span>
+                <span class="form-stepper__label">Choose time</span>
+              </li>
+              <li class="form-stepper__col" data-stepper="3">
+                <span class="form-stepper__node" aria-hidden="true">3</span>
+                <span class="form-stepper__kicker">Step 3</span>
+                <span class="form-stepper__label">Confirm</span>
+              </li>
+            </ol>
             <div class="form-panel is-active" data-step="1">
               <div class="field">
-                <label for="concern">Main concern</label>
+                <label for="concern">Treatment focus</label>
                 <select id="concern" name="concern" required>
                   <option value="">Select an area</option>
                   <option>Back or sciatica</option>
@@ -1266,7 +1387,7 @@
   <footer class="site-footer">
     <div class="wrap footer-grid">
       <div>
-        <p class="brand__name" style="margin:0 0 var(--space-3)">My MSK Clinic</p>
+        <p class="brand__name" style="margin:0 0 var(--space-3)">MyMSK Clinic</p>
         <p style="margin:0;font-size:0.9375rem;color:var(--muted);max-width:36ch">Private musculoskeletal care: back, joint and muscle pain, with in-house ultrasound and ultrasound-guided injections.</p>
       </div>
       <div>
@@ -1286,7 +1407,7 @@
         </ul>
       </div>
     </div>
-    <p class="wrap" style="margin:var(--space-6) 0 0;font-size:0.75rem;color:var(--muted)">© <span id="year"></span> My MSK Clinic. Demo mockup for presentation—replace with live CMS content and booking integration.</p>
+    <p class="wrap" style="margin:var(--space-6) 0 0;font-size:0.75rem;color:var(--muted)">© <span id="year"></span> MyMSK Clinic. Demo mockup for presentation—replace with live CMS content and booking integration.</p>
   </footer>
 
   <div class="bottom-bar" role="navigation" aria-label="Quick actions">
@@ -1392,15 +1513,21 @@
       var form = document.getElementById('enquiryForm');
       var panels = form.querySelectorAll('.form-panel');
       var stepCols = form.querySelectorAll('.form-stepper__col');
+      var bookingProgress = document.getElementById('bookingFlowProgress');
+      var stepTitles = ['Select treatment', 'Choose time', 'Confirm'];
       function goStep(n) {
         panels.forEach(function (p) {
           p.classList.toggle('is-active', p.getAttribute('data-step') === String(n));
         });
         stepCols.forEach(function (col, i) {
-          col.classList.toggle('is-done', i < n);
+          col.classList.toggle('is-done', i < n - 1);
           col.classList.toggle('is-current', i === n - 1);
         });
+        if (bookingProgress) {
+          bookingProgress.textContent = 'Step ' + n + ' of 3 — ' + stepTitles[n - 1];
+        }
       }
+      goStep(1);
       document.getElementById('toStep2').addEventListener('click', function () {
         var c = form.querySelector('#concern');
         var g = form.querySelector('#goal');
