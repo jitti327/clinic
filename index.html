@@ -3,36 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MyMSK Clinic — Musculoskeletal care in Burnley</title>
-  <meta name="description" content="Private MSK clinic for back, joint and muscle pain. In-house ultrasound and ultrasound-guided injections. Dual-qualified GP and osteopath.">
+  <title>MSK Clinic Dashboard — Operations demo</title>
+  <meta name="description" content="Private MSK clinic operations: appointments, patient records, and analytics. Demo dashboard for Burnley-based musculoskeletal care.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet">
   <style>
-    /* ——— Design system: MyMSK Clinic (demo) ——— */
+    /* ——— Design system: MSK Clinic SaaS demo ——— */
     :root {
-      --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-      --font-display: "Fraunces", "Georgia", serif;
-      --canvas: #f3f1ed;
-      --surface: #fffcf8;
-      --surface-2: #f7f4ef;
-      --ink: #161412;
-      --ink-2: #3d3a36;
-      --muted: #6b6560;
-      --line: rgba(22, 20, 18, 0.09);
-      --line-strong: rgba(22, 20, 18, 0.14);
-      --accent: #1a5c54;
-      --accent-hover: #144a44;
-      --accent-soft: rgba(26, 92, 84, 0.09);
-      --accent-fg: #e8f5f3;
-      --warn-soft: rgba(180, 120, 40, 0.12);
-      --shadow-sm: 0 1px 2px rgba(22, 20, 18, 0.04);
-      --shadow-md: 0 8px 24px rgba(22, 20, 18, 0.06), 0 2px 6px rgba(22, 20, 18, 0.04);
-      --shadow-lg: 0 20px 50px rgba(22, 20, 18, 0.08), 0 6px 16px rgba(22, 20, 18, 0.05);
+      --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-display: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --canvas: #f9fafb;
+      --surface: #ffffff;
+      --surface-2: #f3f4f6;
+      --ink: #111827;
+      --ink-2: #374151;
+      --muted: #6b7280;
+      --line: rgba(17, 24, 39, 0.06);
+      --line-strong: rgba(17, 24, 39, 0.1);
+      --accent: #3b82f6;
+      --accent-2: #6366f1;
+      --accent-hover: #2563eb;
+      --accent-soft: rgba(59, 130, 246, 0.12);
+      --accent-fg: #eff6ff;
+      --warn-soft: rgba(245, 158, 11, 0.12);
+      --danger-soft: rgba(239, 68, 68, 0.1);
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08);
+      --shadow-card-hover: 0 8px 28px rgba(0, 0, 0, 0.08);
       --radius-xs: 8px;
       --radius-sm: 12px;
       --radius-md: 16px;
-      --radius-lg: 22px;
+      --radius-lg: 20px;
       --space-1: 4px;
       --space-2: 8px;
       --space-3: 12px;
@@ -40,12 +43,14 @@
       --space-5: 24px;
       --space-6: 32px;
       --space-7: 48px;
-      --space-8: 72px;
-      --space-9: 96px;
-      --max: 1120px;
+      --space-8: 64px;
+      --space-9: 80px;
+      --max: 1140px;
       --header-h: 64px;
-      --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
-      --dur: 0.22s;
+      --ease: ease-in-out;
+      --dur: 0.2s;
+      --gradient-primary: linear-gradient(135deg, #3b82f6, #6366f1);
+      --gradient-hero: linear-gradient(135deg, rgba(59, 130, 246, 0.14) 0%, rgba(99, 102, 241, 0.1) 45%, transparent 70%);
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -58,16 +63,16 @@
     body {
       margin: 0;
       font-family: var(--font-sans);
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.55;
-      color: var(--ink-2);
+      color: var(--muted);
       background: var(--canvas);
       -webkit-font-smoothing: antialiased;
     }
 
     :focus-visible {
       outline: 2px solid var(--accent);
-      outline-offset: 3px;
+      outline-offset: 2px;
     }
 
     /* Visually hidden until focus — avoids off-screen positioning inflating scroll metrics */
@@ -85,6 +90,18 @@
       font-weight: 600;
       color: var(--accent);
     }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     .skip:focus {
       position: fixed;
       left: var(--space-4);
@@ -103,16 +120,16 @@
     h1, h2, h3, h4 {
       font-family: var(--font-display);
       color: var(--ink);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.25;
     }
-    h1 { font-size: clamp(2rem, 4.2vw, 2.75rem); margin: 0 0 var(--space-4); }
-    h2 { font-size: clamp(1.5rem, 2.5vw, 1.85rem); margin: 0 0 var(--space-4); }
-    h3 { font-size: 1.125rem; margin: 0 0 var(--space-2); font-family: var(--font-sans); font-weight: 600; }
+    h1 { font-size: clamp(1.75rem, 4vw, 2.25rem); margin: 0 0 var(--space-4); }
+    h2 { font-size: clamp(1.25rem, 2.5vw, 1.5rem); margin: 0 0 var(--space-4); }
+    h3 { font-size: 1.0625rem; margin: 0 0 var(--space-2); font-weight: 600; color: var(--ink); }
     p { margin: 0 0 var(--space-4); }
     a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-    a:hover { color: var(--accent-hover); }
+    a:hover { color: #1d4ed8; }
 
     .wrap { width: min(100% - var(--space-5) * 2, var(--max)); margin-inline: auto; }
     .eyebrow {
@@ -142,18 +159,34 @@
     }
     .btn:active { transform: scale(0.98); }
     .btn--primary {
-      background: var(--accent);
+      background: var(--gradient-primary);
       color: #fff;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
     }
-    .btn--primary:hover { background: var(--accent-hover); color: #fff; box-shadow: var(--shadow-md); }
+    .btn--primary:hover {
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+    }
     .btn--ghost {
       background: var(--surface);
-      color: var(--ink);
-      border-color: var(--line-strong);
+      color: var(--ink-2);
+      border-color: var(--line);
+      box-shadow: var(--shadow-sm);
     }
-    .btn--ghost:hover { border-color: var(--ink); background: #fff; }
+    .btn--ghost:hover {
+      border-color: var(--line-strong);
+      background: var(--surface);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
     .btn--sm { min-height: 40px; padding: 0 var(--space-4); font-size: 0.875rem; }
+    .btn--xl {
+      min-height: 56px;
+      padding: 0 var(--space-6);
+      font-size: 1rem;
+      border-radius: var(--radius-md);
+    }
 
     /* Chips */
     .chip-row { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-5); }
@@ -174,15 +207,18 @@
     /* Cards */
     .card {
       background: var(--surface);
-      border: 1px solid var(--line);
+      border: none;
       border-radius: var(--radius-md);
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-md);
       padding: var(--space-5);
-      transition: box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+      transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
     }
-    .card:hover { box-shadow: var(--shadow-md); border-color: var(--line-strong); }
-    .card--quiet { background: var(--surface-2); box-shadow: none; }
-    .card--quiet:hover { box-shadow: var(--shadow-sm); }
+    .card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-3px); }
+    .card--quiet {
+      background: var(--surface);
+      box-shadow: var(--shadow-md);
+    }
+    .card--quiet:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
 
     /* Header */
     .site-header {
@@ -314,11 +350,13 @@
       position: relative;
       border-radius: var(--radius-lg);
       background: var(--surface);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-lg);
+      border: none;
+      box-shadow: var(--shadow-md);
       padding: var(--space-5);
       overflow: hidden;
+      transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
     }
+    .care-panel:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
     .care-panel::before {
       content: "";
       position: absolute;
@@ -341,8 +379,9 @@
       position: relative;
       margin-bottom: var(--space-5);
       padding: var(--space-4) var(--space-5);
-      background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 6%, var(--surface)) 0%, var(--surface) 55%);
-      border: 1px solid color-mix(in srgb, var(--accent) 12%, var(--line));
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, var(--surface) 55%);
+      border: none;
+      box-shadow: var(--shadow-sm);
       border-radius: var(--radius-sm);
       display: flex;
       align-items: flex-start;
@@ -411,8 +450,9 @@
       text-align: right;
       padding: var(--space-3) var(--space-4);
       background: var(--surface-2);
-      border: 1px solid var(--line);
+      border: none;
       border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-sm);
     }
     .metric-pill strong { display: block; font-size: 1.35rem; font-family: var(--font-display); color: var(--ink); line-height: 1; }
     .metric-pill span { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
@@ -425,13 +465,16 @@
     @media (min-width: 520px) { .panel-grid { grid-template-columns: 1fr 1fr; } }
 
     .mini-card {
-      background: #fff;
-      border: 1px solid var(--line);
+      background: var(--surface-2);
+      border: none;
       border-radius: var(--radius-sm);
       padding: var(--space-4);
-      transition: border-color var(--dur) var(--ease);
+      transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
     }
-    .mini-card:hover { border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); }
+    .mini-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
     .mini-card__label { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: var(--space-2); }
     .mini-card__val { font-weight: 700; color: var(--ink); font-size: 0.9375rem; }
     .mini-card__sub { font-size: 0.8125rem; color: var(--muted); margin-top: var(--space-2); line-height: 1.4; }
@@ -694,8 +737,8 @@
       content: "";
       position: absolute;
       top: 18px;
-      left: calc(50% + 22px);
-      right: calc(-50% + 22px);
+      left: calc(50% + 20px);
+      right: calc(-50% + 20px);
       height: 2px;
       background: var(--line);
       border-radius: 999px;
@@ -919,6 +962,378 @@
     }
     .fab-panel a:hover { background: var(--surface-2); }
 
+    /* ——— SaaS demo: dashboard, booking, patient, analytics ——— */
+    .hero--glow {
+      position: relative;
+      background: var(--canvas);
+      overflow: hidden;
+    }
+    .hero--glow::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-hero);
+      pointer-events: none;
+    }
+    .hero--glow .wrap { position: relative; z-index: 1; }
+
+    .demo-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-radius: 999px;
+      margin-bottom: var(--space-4);
+    }
+
+    .kpi-hero {
+      position: relative;
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      background: var(--surface);
+      box-shadow: var(--shadow-md);
+      border: none;
+      overflow: hidden;
+    }
+    .kpi-hero::after {
+      content: "";
+      position: absolute;
+      top: -40%;
+      right: -20%;
+      width: 55%;
+      height: 120%;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .kpi-hero__label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 0 0 var(--space-2);
+    }
+    .kpi-hero__value {
+      font-size: clamp(2.75rem, 6vw, 3.75rem);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin: 0 0 var(--space-3);
+    }
+    .kpi-hero__meta {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin: 0;
+    }
+    .kpi-hero__meta strong { color: var(--ink-2); font-weight: 600; }
+
+    .insight-row {
+      display: grid;
+      gap: var(--space-4);
+      margin-top: var(--space-5);
+    }
+    @media (min-width: 640px) {
+      .insight-row { grid-template-columns: repeat(3, 1fr); }
+    }
+    .insight-tile {
+      padding: var(--space-4);
+      background: var(--surface-2);
+      border-radius: var(--radius-sm);
+      transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+    }
+    .insight-tile:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .insight-tile__val {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.2;
+      margin: 0 0 var(--space-2);
+    }
+    .insight-tile__label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 0;
+    }
+    .insight-tile__sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin: var(--space-2) 0 0;
+    }
+    .next-patient {
+      margin-top: var(--space-5);
+      padding: var(--space-4) var(--space-5);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(99, 102, 241, 0.06));
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+    }
+    .next-patient__who { margin: 0; font-weight: 600; color: var(--ink); font-size: 0.9375rem; }
+    .next-patient__when { margin: var(--space-1) 0 0; font-size: 0.8125rem; color: var(--muted); }
+
+    .treatment-grid {
+      display: grid;
+      gap: var(--space-3);
+    }
+    @media (min-width: 520px) {
+      .treatment-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .treatment-option {
+      position: relative;
+      display: block;
+      cursor: pointer;
+    }
+    .treatment-option input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .treatment-option__ui {
+      padding: var(--space-4);
+      border-radius: var(--radius-sm);
+      background: var(--surface-2);
+      border: 2px solid transparent;
+      transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+    }
+    .treatment-option:hover .treatment-option__ui {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .treatment-option input:focus-visible + .treatment-option__ui {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .treatment-option input:checked + .treatment-option__ui {
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.06);
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2);
+    }
+    .treatment-option__title { font-weight: 600; color: var(--ink); margin: 0 0 var(--space-1); font-size: 0.9375rem; }
+    .treatment-option__meta { font-size: 0.75rem; color: var(--muted); margin: 0; }
+
+    .slot-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-2);
+    }
+    @media (min-width: 480px) {
+      .slot-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .slot-btn {
+      min-height: 44px;
+      padding: var(--space-2) var(--space-3);
+      font: inherit;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--ink-2);
+      background: var(--surface-2);
+      border: 2px solid transparent;
+      border-radius: var(--radius-xs);
+      cursor: pointer;
+      transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease), transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+    }
+    .slot-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+    .slot-btn.is-selected {
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--ink);
+    }
+
+    .booking-summary {
+      padding: var(--space-5);
+      background: var(--surface-2);
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+    }
+    .booking-summary dl { margin: 0; display: grid; gap: var(--space-3); }
+    .booking-summary dt { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0; }
+    .booking-summary dd { margin: var(--space-1) 0 0; font-weight: 600; color: var(--ink); }
+
+    .confirm-banner {
+      text-align: center;
+      padding: var(--space-6) var(--space-5);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0.04) 100%);
+      box-shadow: var(--shadow-md);
+    }
+    .confirm-banner h3 { font-size: 1.25rem; margin: 0 0 var(--space-2); color: var(--ink); }
+    .confirm-banner p { margin: 0; color: var(--muted); font-size: 0.9375rem; }
+    .confirm-banner .booking-summary {
+      margin-top: var(--space-5);
+      text-align: left;
+      background: var(--surface);
+    }
+
+    .patient-grid {
+      display: grid;
+      gap: var(--space-5);
+    }
+    @media (min-width: 900px) {
+      .patient-grid { grid-template-columns: 320px 1fr; align-items: start; }
+    }
+    .patient-card {
+      padding: var(--space-5);
+    }
+    .patient-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-md);
+      background: var(--gradient-primary);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: var(--space-4);
+    }
+    .patient-name { font-size: 1.125rem; font-weight: 700; color: var(--ink); margin: 0 0 var(--space-1); }
+    .patient-meta { font-size: 0.8125rem; color: var(--muted); margin: 0 0 var(--space-4); }
+    .stat-pair { display: grid; gap: var(--space-3); margin-top: var(--space-4); }
+    .stat-pair__item {
+      padding: var(--space-3);
+      background: var(--surface-2);
+      border-radius: var(--radius-xs);
+    }
+    .stat-pair__item span { display: block; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+    .stat-pair__item strong { display: block; margin-top: var(--space-1); font-size: 0.9375rem; color: var(--ink); }
+
+    .note-callout {
+      padding: var(--space-4);
+      border-radius: var(--radius-sm);
+      background: var(--warn-soft);
+      border-left: 4px solid #f59e0b;
+      font-size: 0.875rem;
+      color: var(--ink-2);
+      margin-bottom: var(--space-5);
+    }
+    .note-callout strong { color: var(--ink); }
+
+    .clinical-timeline {
+      position: relative;
+      padding-left: var(--space-5);
+      margin: 0;
+      list-style: none;
+    }
+    .clinical-timeline::before {
+      content: "";
+      position: absolute;
+      left: 11px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--line-strong);
+      border-radius: 999px;
+    }
+    .clinical-timeline li {
+      position: relative;
+      padding-bottom: var(--space-5);
+    }
+    .clinical-timeline li:last-child { padding-bottom: 0; }
+    .clinical-timeline li::before {
+      content: "";
+      position: absolute;
+      left: calc(-1 * var(--space-5) + 5px);
+      top: 4px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+    .timeline-date { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 0 0 var(--space-1); }
+    .timeline-title { font-weight: 600; color: var(--ink); margin: 0 0 var(--space-1); font-size: 0.9375rem; }
+    .timeline-body { font-size: 0.875rem; color: var(--muted); margin: 0; line-height: 1.5; }
+
+    .analytics-layout {
+      display: grid;
+      gap: var(--space-5);
+    }
+    @media (min-width: 900px) {
+      .analytics-layout { grid-template-columns: 1fr 1fr; align-items: start; }
+    }
+    .chart-card { padding: var(--space-5); min-height: 280px; }
+    .chart-bars {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--space-2);
+      height: 160px;
+      margin-top: var(--space-5);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--line);
+    }
+    .chart-bar {
+      flex: 1;
+      border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+      background: linear-gradient(180deg, #93c5fd, #3b82f6);
+      min-height: 24px;
+      transform-origin: bottom;
+      transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+    }
+    .chart-bar:hover { transform: scaleY(1.04); opacity: 0.92; }
+    .chart-bar:nth-child(2) { background: linear-gradient(180deg, #a5b4fc, #6366f1); }
+    .chart-bar:nth-child(3) { background: linear-gradient(180deg, #7dd3fc, #0ea5e9); }
+    .chart-bar:nth-child(4) { background: linear-gradient(180deg, #86efac, #22c55e); }
+    .chart-bar:nth-child(5) { background: linear-gradient(180deg, #fcd34d, #f59e0b); }
+    .chart-bar:nth-child(6) { background: linear-gradient(180deg, #c4b5fd, #8b5cf6); }
+    .chart-labels {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-2);
+      margin-top: var(--space-2);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .insight-list {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-4) 0 0;
+      display: grid;
+      gap: var(--space-3);
+    }
+    .insight-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      font-size: 0.875rem;
+      color: var(--ink-2);
+    }
+    .insight-list li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+      background: var(--accent);
+    }
+
+    .form-stepper__col.is-done:not(:last-child)::after {
+      background: linear-gradient(90deg, var(--accent), rgba(99, 102, 241, 0.5));
+    }
+    .form-panel.is-hidden { display: none !important; }
+
+    .cta-block {
+      border: none;
+      box-shadow: var(--shadow-md);
+    }
+
     /* Reveal */
     .reveal { opacity: 0; transform: translateY(12px); }
     .reveal.is-visible { opacity: 1; transform: translateY(0); transition: opacity 0.5s var(--ease), transform 0.5s var(--ease); }
@@ -932,24 +1347,30 @@
 
   <header class="site-header" id="header">
     <div class="wrap site-header__inner">
-      <a class="brand" href="#" aria-label="MyMSK Clinic — MyMSK Clinic Dashboard home">
+      <a class="brand" href="#" aria-label="MSK Clinic Dashboard — home">
         <svg class="brand__mark" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-          <rect width="40" height="40" rx="12" fill="#1a5c54"/>
+          <rect width="40" height="40" rx="12" fill="url(#brandGrad)"/>
+          <defs>
+            <linearGradient id="brandGrad" x1="8" y1="4" x2="32" y2="36" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#3b82f6"/>
+              <stop offset="1" stop-color="#6366f1"/>
+            </linearGradient>
+          </defs>
           <path d="M11 26V14h3.2l2.9 5.1h.1L20 14h3.1v12h-2.8v-6.3h-.1l-2.2 3.9h-1.8l-2.2-3.9h-.1V26H11z" fill="#fff"/>
           <path d="M25.5 14H29l2.5 4.4V14h2.7v12H30l-2.6-4.5V26h-2.8V14h.9z" fill="#fff" opacity=".88"/>
         </svg>
         <span class="brand__text">
-          <span class="brand__name">MyMSK Clinic</span>
-          <span class="brand__product">MyMSK Clinic Dashboard</span>
-          <span class="brand__tag">Burnley · Manchester patients welcome</span>
+          <span class="brand__name">MSK Clinic Dashboard</span>
+          <span class="brand__product">Operations · MyMSK Burnley</span>
+          <span class="brand__tag">Demo data · UK formatting</span>
         </span>
       </a>
       <nav class="nav-main" aria-label="Primary">
-        <a href="#pathways">How we help</a>
-        <a href="#treatments">Treatments</a>
-        <a href="#trust">Why patients choose us</a>
-        <a href="#specialist">Specialist</a>
-        <a href="#visit">Your visit</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#book">Booking</a>
+        <a href="#patient">Patient</a>
+        <a href="#analytics">Analytics</a>
+        <a href="#pathways">Care pathways</a>
         <a href="#faq">FAQ</a>
       </nav>
       <div class="header-actions">
@@ -966,96 +1387,420 @@
     <div class="mobile-drawer__backdrop" id="drawerBack"></div>
     <div class="mobile-drawer__panel" role="dialog" aria-label="Menu">
       <nav aria-label="Mobile">
-        <a href="#pathways">How we help</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#book">Booking</a>
+        <a href="#patient">Patient</a>
+        <a href="#analytics">Analytics</a>
+        <a href="#pathways">Care pathways</a>
         <a href="#treatments">Treatments</a>
-        <a href="#trust">Why patients choose us</a>
-        <a href="#specialist">Specialist</a>
-        <a href="#visit">Your visit</a>
         <a href="#faq">FAQ</a>
-        <a href="#book">Book consultation</a>
+        <a href="#book">Book appointment</a>
       </nav>
       <p style="margin-top:1.5rem;font-size:0.875rem;color:var(--muted)">Private MSK care with in-house ultrasound.</p>
     </div>
   </div>
 
   <main id="main">
-    <section class="hero wrap reveal" aria-labelledby="hero-title">
+    <section class="hero hero--glow wrap reveal" aria-labelledby="hero-title">
       <div class="hero__grid">
         <div>
-          <p class="eyebrow">Musculoskeletal clinic · Burnley</p>
-          <h1 id="hero-title">Serious relief for back, joint and muscle pain—guided with precision.</h1>
-          <p class="hero__lead">MyMSK Clinic combines osteopathic assessment with modern diagnostic ultrasound and ultrasound-guided injections, so your care is clearer, more accurate, and easier to trust.</p>
+          <span class="demo-pill">Client-ready product demo</span>
+          <p class="eyebrow">MSK Clinic · Burnley, UK</p>
+          <h1 id="hero-title">Run your clinic with calmer operations, clearer appointments, and confident patient follow-up.</h1>
+          <p class="hero__lead">This page pairs your public MyMSK story with a premium operations preview: live-style dashboard, guided booking, clinical patient timeline, and analytics that answer “what should we do this week?”</p>
           <div class="hero__actions">
-            <a class="btn btn--primary" href="#book">Book consultation</a>
-            <a class="btn btn--ghost" href="#treatments">Explore treatments</a>
+            <a class="btn btn--primary" href="#dashboard">View dashboard</a>
+            <a class="btn btn--ghost" href="#book">Book appointment</a>
           </div>
-          <div class="chip-row" aria-label="Key credentials">
+          <div class="chip-row" aria-label="Trust signals">
             <span class="chip">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              Ultrasound-guided injections
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+              UK demo data &amp; timestamps
             </span>
             <span class="chip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
-              Dual-qualified GP &amp; osteopath
+              GMC &amp; GOsC-registered lead clinician
             </span>
             <span class="chip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 5 2-7L3 9h7z"/></svg>
-              5.0 Google rating · 300+ reviews
+              5.0 Google · 300+ reviews
             </span>
           </div>
         </div>
-        <div class="care-panel reveal" aria-label="Care overview">
+        <div class="care-panel reveal" aria-label="Clinic snapshot">
           <div class="care-panel__top">
             <div>
-              <p class="care-panel__title">Today in clinic</p>
-              <p class="care-panel__headline">Assessment → ultrasound clarity → informed next steps</p>
+              <p class="care-panel__title">MSK Clinic Dashboard · Today</p>
+              <p class="care-panel__headline">Friday 18 Apr 2026 — diary on track, imaging block at 14:00</p>
             </div>
             <div class="metric-pill">
-              <strong>5.0</strong>
-              <span>Google reviews</span>
+              <strong>18</strong>
+              <span>Appointments today</span>
             </div>
           </div>
-          <aside class="insight-card" aria-label="Practice snapshot">
+          <aside class="insight-card" aria-label="Triage">
             <div class="insight-card__body">
-              <p class="insight-card__eyebrow">Practice pulse</p>
-              <p class="insight-card__label">New enquiries awaiting response</p>
-              <p class="insight-card__note">Illustrative for this demo—connect to your inbox or CRM to surface the real queue.</p>
+              <p class="insight-card__eyebrow">Front desk</p>
+              <p class="insight-card__label">Awaiting callback — new private enquiries</p>
+              <p class="insight-card__note">Last updated 08:12 · Syncs to your CRM in production.</p>
             </div>
             <div class="insight-card__metric">
               <span class="insight-card__val">4</span>
-              <span class="insight-card__unit">This week</span>
+              <span class="insight-card__unit">Open tasks</span>
             </div>
           </aside>
           <div class="panel-grid">
             <div class="mini-card">
-              <div class="mini-card__label">In-house imaging</div>
-              <div class="mini-card__val">MSK ultrasound on site</div>
-              <p class="mini-card__sub">See the tissues involved before deciding on injection therapy.</p>
+              <div class="mini-card__label">Last visit (demo patient)</div>
+              <div class="mini-card__val">John Smith · 12 Mar 2026</div>
+              <p class="mini-card__sub">Follow-up Session · Left knee · Pain 2/10 at discharge.</p>
             </div>
             <div class="mini-card">
-              <div class="mini-card__label">Injection accuracy</div>
-              <div class="mini-card__val">Ultrasound-guided</div>
-              <p class="mini-card__sub">Research supports improved accuracy versus blind placement—supporting better outcomes.</p>
+              <div class="mini-card__label">Next follow-up</div>
+              <div class="mini-card__val">Due in 5 days</div>
+              <p class="mini-card__sub">Joint Injection review · Wed 23 Apr 09:40 · Room 1.</p>
             </div>
             <div class="mini-card">
-              <div class="mini-card__label">Next opening</div>
-              <div class="mini-card__val">Request a slot</div>
-              <p class="mini-card__sub">Tell us your main concern—we’ll guide you to the right appointment type.</p>
+              <div class="mini-card__label">Upcoming</div>
+              <div class="mini-card__val">Sarah Williams 09:40</div>
+              <p class="mini-card__sub">Ultrasound-guided injection · Shoulder · Checked in 09:36.</p>
             </div>
             <div class="mini-card">
-              <div class="mini-card__label">Locations</div>
-              <div class="mini-card__val">Burnley clinic</div>
-              <p class="mini-card__sub">Serving Lancashire and Greater Manchester.</p>
+              <div class="mini-card__label">Clinic site</div>
+              <div class="mini-card__val">Burnley BB11</div>
+              <p class="mini-card__sub">Greater Manchester &amp; Lancashire catchment — same-day enquiries capped at 6.</p>
             </div>
           </div>
           <div class="timeline-bar">
             <div class="timeline-bar__steps">
-              <span class="tl-step is-active">Listen</span>
-              <span class="tl-step is-active">Assess</span>
-              <span class="tl-step is-active">Image</span>
-              <span class="tl-step">Plan</span>
+              <span class="tl-step is-active">Triage</span>
+              <span class="tl-step is-active">Treat</span>
+              <span class="tl-step is-active">Document</span>
+              <span class="tl-step">Follow-up</span>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap reveal" id="dashboard" aria-labelledby="dash-title">
+      <div class="section__head">
+        <span class="demo-pill">What matters today</span>
+        <p class="eyebrow">Dashboard</p>
+        <h2 id="dash-title">What do you need to know today?</h2>
+        <p>One clear headline number, then the exceptions that need a decision — missed visits, follow-ups, and who is in the chair next.</p>
+      </div>
+      <div class="kpi-hero">
+        <p class="kpi-hero__label">Today’s appointments</p>
+        <p class="kpi-hero__value">18</p>
+        <p class="kpi-hero__meta"><strong>6</strong> completed · <strong>12</strong> remaining · In-house ultrasound block <strong>14:00–16:30</strong></p>
+        <div class="insight-row">
+          <div class="insight-tile">
+            <p class="insight-tile__val">4</p>
+            <p class="insight-tile__label">Missed appointments (this week)</p>
+            <p class="insight-tile__sub">+2 vs last week · SMS reminders enabled</p>
+          </div>
+          <div class="insight-tile">
+            <p class="insight-tile__val">7</p>
+            <p class="insight-tile__label">Follow-ups due</p>
+            <p class="insight-tile__sub">3 marked clinical priority</p>
+          </div>
+          <div class="insight-tile">
+            <p class="insight-tile__val">£4.2k</p>
+            <p class="insight-tile__label">Projected revenue (today)</p>
+            <p class="insight-tile__sub">Excludes insurance pendings</p>
+          </div>
+        </div>
+        <div class="next-patient">
+          <div>
+            <p class="next-patient__who">Next patient · Sarah Williams</p>
+            <p class="next-patient__when"><strong>Joint Injection</strong> · <strong>09:40</strong> · Treatment room 1 · Last visit 26 Mar 2026</p>
+          </div>
+          <a class="btn btn--ghost btn--sm" href="#patient">Open exemplar record</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap reveal" id="book" aria-labelledby="book-title">
+      <div class="cta-block">
+        <div>
+          <span class="demo-pill">Highest-impact flow</span>
+          <p class="eyebrow">Guided booking</p>
+          <h2 id="book-title">Book like a product team designed it.</h2>
+          <p>Patients (or staff) move through four short steps with obvious progress, highlighted choices, and a confident confirmation — then your front desk gets structured details instead of vague emails.</p>
+          <ul class="cred-list" style="margin-top:var(--space-4)">
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.3 1.7.54 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.11a2 2 0 0 1 2.11-.45c.8.24 1.64.42 2.5.54A2 2 0 0 1 22 16.92z"/></svg>
+              <a href="tel:03337729655"><strong>0333 772 9655</strong></a>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4zM22 6l-10 7L2 6"/></svg>
+              <a href="mailto:admin@mymskclinic.co.uk"><strong>admin@mymskclinic.co.uk</strong></a>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C8 18 4 14.5 4 10a8 8 0 0 1 16 0c0 4.5-4 8-8 11.7z"/></svg>
+              <a href="https://maps.google.com/?cid=9988807352140178415"><strong>Directions · Burnley</strong></a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div id="bookingShell">
+            <form id="enquiryForm" novalidate>
+              <div class="booking-flow__head">
+                <h3 class="booking-flow__title">Book an appointment</h3>
+                <p class="booking-flow__progress" id="bookingFlowProgress" aria-live="polite">Step 1 of 4 — Select treatment</p>
+              </div>
+              <ol class="form-stepper" aria-label="Booking progress">
+                <li class="form-stepper__col is-current" data-stepper="1">
+                  <span class="form-stepper__node" aria-hidden="true">1</span>
+                  <span class="form-stepper__kicker">Step 1</span>
+                  <span class="form-stepper__label">Treatment</span>
+                </li>
+                <li class="form-stepper__col" data-stepper="2">
+                  <span class="form-stepper__node" aria-hidden="true">2</span>
+                  <span class="form-stepper__kicker">Step 2</span>
+                  <span class="form-stepper__label">Date &amp; time</span>
+                </li>
+                <li class="form-stepper__col" data-stepper="3">
+                  <span class="form-stepper__node" aria-hidden="true">3</span>
+                  <span class="form-stepper__kicker">Step 3</span>
+                  <span class="form-stepper__label">Your details</span>
+                </li>
+                <li class="form-stepper__col" data-stepper="4">
+                  <span class="form-stepper__node" aria-hidden="true">4</span>
+                  <span class="form-stepper__kicker">Step 4</span>
+                  <span class="form-stepper__label">Confirm</span>
+                </li>
+              </ol>
+
+              <div class="form-panel is-active" data-step="1">
+                <p style="margin:0 0 var(--space-4);font-size:0.875rem;color:var(--muted)">Choose the appointment type. Selection is highlighted for clarity.</p>
+                <div class="treatment-grid" role="group" aria-labelledby="treat-label">
+                  <span id="treat-label" class="visually-hidden">Treatment type</span>
+                  <label class="treatment-option">
+                    <input type="radio" name="treatment" value="Joint Injection (ultrasound-guided)" required>
+                    <span class="treatment-option__ui">
+                      <span class="treatment-option__title">Joint Injection</span>
+                      <span class="treatment-option__meta">Ultrasound-guided · typical 30–45 min</span>
+                    </span>
+                  </label>
+                  <label class="treatment-option">
+                    <input type="radio" name="treatment" value="Follow-up Session" required>
+                    <span class="treatment-option__ui">
+                      <span class="treatment-option__title">Follow-up Session</span>
+                      <span class="treatment-option__meta">Review progress · adjust care plan</span>
+                    </span>
+                  </label>
+                  <label class="treatment-option">
+                    <input type="radio" name="treatment" value="Initial MSK Assessment" required>
+                    <span class="treatment-option__ui">
+                      <span class="treatment-option__title">Initial MSK Assessment</span>
+                      <span class="treatment-option__meta">First visit · history &amp; examination</span>
+                    </span>
+                  </label>
+                  <label class="treatment-option">
+                    <input type="radio" name="treatment" value="Ultrasound Scan &amp; Report" required>
+                    <span class="treatment-option__ui">
+                      <span class="treatment-option__title">Ultrasound Scan &amp; Report</span>
+                      <span class="treatment-option__meta">Diagnostic imaging on site</span>
+                    </span>
+                  </label>
+                </div>
+                <div class="form-actions">
+                  <button type="button" class="btn btn--primary btn--xl" id="toStep2">Continue</button>
+                </div>
+              </div>
+
+              <div class="form-panel" data-step="2">
+                <div class="field">
+                  <label for="bookDate">Preferred date</label>
+                  <input type="date" id="bookDate" name="bookDate" value="2026-04-22" min="2026-04-18" required>
+                </div>
+                <p style="margin:0 0 var(--space-2);font-size:0.8125rem;font-weight:600;color:var(--ink)">Available slots</p>
+                <p style="margin:0 0 var(--space-3);font-size:0.8125rem;color:var(--muted)">Tap a time — your choice stays highlighted.</p>
+                <div class="slot-grid" id="slotGrid" role="group" aria-label="Appointment time">
+                  <button type="button" class="slot-btn" data-slot="09:00">09:00</button>
+                  <button type="button" class="slot-btn" data-slot="09:40">09:40</button>
+                  <button type="button" class="slot-btn" data-slot="11:15">11:15</button>
+                  <button type="button" class="slot-btn" data-slot="14:00">14:00</button>
+                  <button type="button" class="slot-btn" data-slot="15:30">15:30</button>
+                  <button type="button" class="slot-btn" data-slot="16:45">16:45</button>
+                </div>
+                <input type="hidden" id="bookSlot" name="bookSlot" value="">
+                <div class="form-actions">
+                  <button type="button" class="btn btn--ghost" id="backStep1">Back</button>
+                  <button type="button" class="btn btn--primary btn--xl" id="toStep3">Continue</button>
+                </div>
+              </div>
+
+              <div class="form-panel" data-step="3">
+                <div class="field">
+                  <label for="name">Full name</label>
+                  <input id="name" name="name" type="text" autocomplete="name" placeholder="e.g. John Smith" required>
+                </div>
+                <div class="field">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+                </div>
+                <div class="field">
+                  <label for="phone">Phone</label>
+                  <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="e.g. 07700 900123" required>
+                </div>
+                <div class="field">
+                  <label for="message">Clinical or admin notes (optional)</label>
+                  <textarea id="message" name="message" placeholder="Allergies, GP surgery, referral letters…"></textarea>
+                </div>
+                <div class="form-actions">
+                  <button type="button" class="btn btn--ghost" id="backFromStep3">Back</button>
+                  <button type="button" class="btn btn--primary btn--xl" id="toStep4">Continue</button>
+                </div>
+              </div>
+
+              <div class="form-panel" data-step="4">
+                <p style="margin:0 0 var(--space-4);font-size:0.875rem;color:var(--muted)">Review and confirm — details mirror what staff would see on the diary.</p>
+                <div class="booking-summary" aria-live="polite">
+                  <dl>
+                    <div>
+                      <dt>Treatment</dt>
+                      <dd id="sumTreatment">—</dd>
+                    </div>
+                    <div>
+                      <dt>Date &amp; time</dt>
+                      <dd id="sumWhen">—</dd>
+                    </div>
+                    <div>
+                      <dt>Patient</dt>
+                      <dd id="sumPatient">—</dd>
+                    </div>
+                    <div>
+                      <dt>Contact</dt>
+                      <dd id="sumContact">—</dd>
+                    </div>
+                  </dl>
+                </div>
+                <p id="formStatus" role="status" style="font-size:0.875rem;color:var(--muted);min-height:1.25rem;margin-top:var(--space-4)"></p>
+                <div class="form-actions">
+                  <button type="button" class="btn btn--ghost" id="backFromStep4">Back</button>
+                  <button type="button" class="btn btn--primary btn--xl" id="confirmBookingBtn">Confirm appointment</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div id="bookingSuccess" class="confirm-banner" hidden>
+            <p class="eyebrow" style="margin:0 0 var(--space-2);color:#059669;letter-spacing:0.12em">Status</p>
+            <h3 style="margin:0 0 var(--space-2)">Appointment confirmed</h3>
+            <p style="max-width:42ch;margin-inline:auto">We’ve placed this on the demo diary. In production, confirmations would sync to your PMS, send NHS-style SMS reminders, and log consent.</p>
+            <div class="booking-summary">
+              <dl>
+                <div>
+                  <dt>Treatment</dt>
+                  <dd id="okTreatment">—</dd>
+                </div>
+                <div>
+                  <dt>Date &amp; time</dt>
+                  <dd id="okWhen">—</dd>
+                </div>
+                <div>
+                  <dt>Patient</dt>
+                  <dd id="okPatient">—</dd>
+                </div>
+                <div>
+                  <dt>Contact</dt>
+                  <dd id="okContact">—</dd>
+                </div>
+              </dl>
+            </div>
+            <button type="button" class="btn btn--ghost" id="resetBookingDemo" style="margin-top:var(--space-4)">Book another appointment</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap reveal" id="patient" aria-labelledby="patient-title">
+      <div class="section__head">
+        <span class="demo-pill">Clinical depth</span>
+        <p class="eyebrow">Patient profile</p>
+        <h2 id="patient-title">John Smith — exemplar MSK record</h2>
+        <p>Demonstrates how owners scan risk, follow-up timing, and treatment history without digging through spreadsheets.</p>
+      </div>
+      <div class="patient-grid">
+        <div class="card patient-card">
+          <div class="patient-avatar" aria-hidden="true">JS</div>
+          <p class="patient-name">John Smith</p>
+          <p class="patient-meta">DOB 14 Aug 1972 · NHS No. 485 773 2602 · Burnley</p>
+          <div class="stat-pair">
+            <div class="stat-pair__item">
+              <span>Last visit</span>
+              <strong>Wed 12 Mar 2026 · 10:20</strong>
+            </div>
+            <div class="stat-pair__item">
+              <span>Next follow-up</span>
+              <strong>Due in 5 days · Wed 23 Apr 2026 · 09:40</strong>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="note-callout" role="note">
+            <strong>Important:</strong> Warfarin — confirm INR in range before next <strong>Joint Injection</strong> slot. Flagged for prescriber review.
+          </div>
+          <h3 style="margin:0 0 var(--space-4)">Treatment history</h3>
+          <ul class="clinical-timeline">
+            <li>
+              <p class="timeline-date">12 Mar 2026 · Today-relative: 5 weeks ago</p>
+              <p class="timeline-title">Follow-up Session</p>
+              <p class="timeline-body">Left knee OA flare. ROM improved. Plan: continue loading programme; review injection response in 6 weeks.</p>
+            </li>
+            <li>
+              <p class="timeline-date">14 Feb 2026</p>
+              <p class="timeline-title">Joint Injection · Ultrasound-guided cortisone</p>
+              <p class="timeline-body">Medial compartment approach. Post-procedure advice given; driving OK after 24h if comfortable.</p>
+            </li>
+            <li>
+              <p class="timeline-date">08 Jan 2026</p>
+              <p class="timeline-title">Initial MSK Assessment</p>
+              <p class="timeline-body">Bilateral knee pain 6 months. Baseline WOMAC captured; ultrasound arranged same visit.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap reveal" id="analytics" aria-labelledby="analytics-title">
+      <div class="section__head">
+        <span class="demo-pill">Actionable insight</span>
+        <p class="eyebrow">Analytics</p>
+        <h2 id="analytics-title">See value, not just charts</h2>
+        <p>Pair simple visuals with plain-language takeaways clinic owners can act on this week.</p>
+      </div>
+      <div class="analytics-layout">
+        <div class="card chart-card">
+          <h3 style="margin:0 0 var(--space-2)">Completed appointments</h3>
+          <p style="margin:0;font-size:0.875rem;color:var(--muted)">Last 6 clinic days · Burnley site</p>
+          <div class="chart-bars" role="img" aria-label="Bar chart of daily completed appointments, Monday through Saturday">
+            <div class="chart-bar" style="height:42%"></div>
+            <div class="chart-bar" style="height:55%"></div>
+            <div class="chart-bar" style="height:38%"></div>
+            <div class="chart-bar" style="height:72%"></div>
+            <div class="chart-bar" style="height:64%"></div>
+            <div class="chart-bar" style="height:48%"></div>
+          </div>
+          <div class="chart-labels">
+            <span>Mon</span>
+            <span>Tue</span>
+            <span>Wed</span>
+            <span>Thu</span>
+            <span>Fri</span>
+            <span>Sat</span>
+          </div>
+        </div>
+        <div class="card chart-card">
+          <h3 style="margin:0 0 var(--space-2)">Practice signals</h3>
+          <p style="margin:0;font-size:0.875rem;color:var(--muted)">Week ending 18 Apr 2026</p>
+          <ul class="insight-list">
+            <li><strong style="color:var(--ink)">Missed appointments this week: 4</strong> — worth £640 at average private slot (demo assumption).</li>
+            <li><strong style="color:var(--ink)">Repeat patients: +12%</strong> vs prior 4-week baseline — retention campaign can wait; capacity is the bottleneck.</li>
+            <li><strong style="color:var(--ink)">Injection list utilisation: 88%</strong> — consider opening one extra half-day or offering Manchester patients tele-triage.</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -1250,117 +1995,6 @@
       </div>
     </section>
 
-    <section class="section wrap reveal" id="book" aria-labelledby="book-title">
-      <div class="cta-block">
-        <div>
-          <p class="eyebrow">Book &amp; enquire</p>
-          <h2 id="book-title">Ready for a clearer next step?</h2>
-          <p>Call the clinic, email, or send a structured enquiry—we will respond with appointment options. This demo form simulates a premium intake flow; connect it to your CRM or inbox in production.</p>
-          <ul class="cred-list" style="margin-top:var(--space-4)">
-            <li>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.3 1.7.54 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.11a2 2 0 0 1 2.11-.45c.8.24 1.64.42 2.5.54A2 2 0 0 1 22 16.92z"/></svg>
-              <a href="tel:03337729655"><strong>0333 772 9655</strong></a>
-            </li>
-            <li>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4zM22 6l-10 7L2 6"/></svg>
-              <a href="mailto:admin@mymskclinic.co.uk"><strong>admin@mymskclinic.co.uk</strong></a>
-            </li>
-            <li>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C8 18 4 14.5 4 10a8 8 0 0 1 16 0c0 4.5-4 8-8 11.7z"/></svg>
-              <a href="https://maps.google.com/?cid=9988807352140178415"><strong>Directions · Burnley</strong></a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <form id="enquiryForm" novalidate>
-            <div class="booking-flow__head">
-              <h3 class="booking-flow__title">Book your visit</h3>
-              <p class="booking-flow__progress" id="bookingFlowProgress" aria-live="polite">Step 1 of 3 — Select treatment</p>
-            </div>
-            <ol class="form-stepper" aria-label="Booking progress">
-              <li class="form-stepper__col is-current" data-stepper="1">
-                <span class="form-stepper__node" aria-hidden="true">1</span>
-                <span class="form-stepper__kicker">Step 1</span>
-                <span class="form-stepper__label">Select treatment</span>
-              </li>
-              <li class="form-stepper__col" data-stepper="2">
-                <span class="form-stepper__node" aria-hidden="true">2</span>
-                <span class="form-stepper__kicker">Step 2</span>
-                <span class="form-stepper__label">Choose time</span>
-              </li>
-              <li class="form-stepper__col" data-stepper="3">
-                <span class="form-stepper__node" aria-hidden="true">3</span>
-                <span class="form-stepper__kicker">Step 3</span>
-                <span class="form-stepper__label">Confirm</span>
-              </li>
-            </ol>
-            <div class="form-panel is-active" data-step="1">
-              <div class="field">
-                <label for="concern">Treatment focus</label>
-                <select id="concern" name="concern" required>
-                  <option value="">Select an area</option>
-                  <option>Back or sciatica</option>
-                  <option>Neck or upper back</option>
-                  <option>Shoulder</option>
-                  <option>Hip or knee</option>
-                  <option>Foot or ankle</option>
-                  <option>Sports / tendon pain</option>
-                  <option>General MSK / unsure</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="goal">What do you want to achieve?</label>
-                <textarea id="goal" name="goal" placeholder="e.g. sleep through the night, return to running, avoid surgery…" required></textarea>
-              </div>
-              <div class="form-actions">
-                <button type="button" class="btn btn--primary" id="toStep2">Continue</button>
-              </div>
-            </div>
-            <div class="form-panel" data-step="2">
-              <div class="field">
-                <label for="prefSlot">Preferred appointment time</label>
-                <select id="prefSlot" name="prefSlot" required>
-                  <option value="">Choose a preference</option>
-                  <option>Weekday morning</option>
-                  <option>Weekday afternoon</option>
-                  <option>Weekday evening</option>
-                  <option>Saturday morning</option>
-                  <option>Flexible — contact me</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="name">Full name</label>
-                <input id="name" name="name" type="text" autocomplete="name" required>
-              </div>
-              <div class="field">
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" autocomplete="email" required>
-              </div>
-              <div class="field">
-                <label for="phone">Phone</label>
-                <input id="phone" name="phone" type="tel" autocomplete="tel" required>
-              </div>
-              <div class="form-actions">
-                <button type="button" class="btn btn--ghost" id="backStep1">Back</button>
-                <button type="button" class="btn btn--primary" id="toStep3">Continue</button>
-              </div>
-            </div>
-            <div class="form-panel" data-step="3">
-              <div class="field">
-                <label for="message">Anything else we should know?</label>
-                <textarea id="message" name="message" placeholder="Previous scans, allergies, preferred days…"></textarea>
-              </div>
-              <p id="formStatus" role="status" style="font-size:0.875rem;color:var(--muted);min-height:1.25rem"></p>
-              <div class="form-actions">
-                <button type="button" class="btn btn--ghost" id="backStep2">Back</button>
-                <button type="submit" class="btn btn--primary" id="submitDemo">Submit enquiry (demo)</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
-
     <section class="section wrap reveal" id="faq" aria-labelledby="faq-title">
       <div class="section__head">
         <p class="eyebrow">FAQ</p>
@@ -1408,7 +2042,7 @@
   <footer class="site-footer">
     <div class="wrap footer-grid">
       <div>
-        <p class="brand__name" style="margin:0 0 var(--space-3)">MyMSK Clinic</p>
+        <p class="brand__name" style="margin:0 0 var(--space-3)">MSK Clinic Dashboard</p>
         <p style="margin:0;font-size:0.9375rem;color:var(--muted);max-width:36ch">Private musculoskeletal care: back, joint and muscle pain, with in-house ultrasound and ultrasound-guided injections.</p>
       </div>
       <div>
@@ -1530,12 +2164,17 @@
         });
       });
 
-      /* Form stepper */
+      /* Booking stepper (4 steps) */
       var form = document.getElementById('enquiryForm');
+      var bookingShell = document.getElementById('bookingShell');
+      var bookingSuccess = document.getElementById('bookingSuccess');
       var panels = form.querySelectorAll('.form-panel');
       var stepCols = form.querySelectorAll('.form-stepper__col');
       var bookingProgress = document.getElementById('bookingFlowProgress');
-      var stepTitles = ['Select treatment', 'Choose time', 'Confirm'];
+      var bookSlotInput = document.getElementById('bookSlot');
+      var stepTitles = ['Select treatment', 'Choose date & time', 'Enter details', 'Confirm booking'];
+      var totalSteps = 4;
+
       function goStep(n) {
         panels.forEach(function (p) {
           p.classList.toggle('is-active', p.getAttribute('data-step') === String(n));
@@ -1545,32 +2184,103 @@
           col.classList.toggle('is-current', i === n - 1);
         });
         if (bookingProgress) {
-          bookingProgress.textContent = 'Step ' + n + ' of 3 — ' + stepTitles[n - 1];
+          bookingProgress.textContent = 'Step ' + n + ' of ' + totalSteps + ' — ' + stepTitles[n - 1];
         }
       }
+
+      function fillSummary() {
+        var t = form.querySelector('input[name="treatment"]:checked');
+        document.getElementById('sumTreatment').textContent = t ? t.value : '—';
+        var d = form.querySelector('#bookDate').value;
+        var slot = bookSlotInput.value;
+        var whenStr = '—';
+        if (d && slot) {
+          var dt = new Date(d + 'T12:00:00');
+          whenStr = dt.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }) + ' · ' + slot;
+        }
+        document.getElementById('sumWhen').textContent = whenStr;
+        document.getElementById('sumPatient').textContent = form.querySelector('#name').value.trim() || '—';
+        var email = form.querySelector('#email').value.trim();
+        var phone = form.querySelector('#phone').value.trim();
+        document.getElementById('sumContact').textContent = (email && phone) ? (email + ' · ' + phone) : '—';
+      }
+
+      function copySummaryToConfirmed() {
+        var pairs = [['sumTreatment', 'okTreatment'], ['sumWhen', 'okWhen'], ['sumPatient', 'okPatient'], ['sumContact', 'okContact']];
+        pairs.forEach(function (p) {
+          var from = document.getElementById(p[0]);
+          var to = document.getElementById(p[1]);
+          if (from && to) to.textContent = from.textContent;
+        });
+      }
+
+      document.querySelectorAll('#slotGrid .slot-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('#slotGrid .slot-btn').forEach(function (b) { b.classList.remove('is-selected'); });
+          btn.classList.add('is-selected');
+          bookSlotInput.value = btn.getAttribute('data-slot') || '';
+        });
+      });
+
       goStep(1);
+
       document.getElementById('toStep2').addEventListener('click', function () {
-        var c = form.querySelector('#concern');
-        var g = form.querySelector('#goal');
-        if (!c.value) { c.reportValidity(); return; }
-        if (!g.value.trim()) { g.reportValidity(); return; }
+        var picked = form.querySelector('input[name="treatment"]:checked');
+        if (!picked) {
+          var st = document.getElementById('formStatus');
+          if (st) st.textContent = 'Please select a treatment to continue.';
+          return;
+        }
+        document.getElementById('formStatus').textContent = '';
         goStep(2);
       });
+
       document.getElementById('backStep1').addEventListener('click', function () { goStep(1); });
+
       document.getElementById('toStep3').addEventListener('click', function () {
-        var slot = form.querySelector('#prefSlot');
-        if (!slot.value) { slot.reportValidity(); return; }
-        if (form.querySelector('#name').value && form.querySelector('#email').value && form.querySelector('#phone').value) goStep(3);
-        else {
-          ['#name', '#email', '#phone'].forEach(function (s) { form.querySelector(s).reportValidity(); });
+        var dateEl = form.querySelector('#bookDate');
+        if (!dateEl.value) { dateEl.reportValidity(); return; }
+        if (!bookSlotInput.value) {
+          document.getElementById('formStatus').textContent = 'Please choose a time slot.';
+          return;
         }
+        document.getElementById('formStatus').textContent = '';
+        goStep(3);
       });
-      document.getElementById('backStep2').addEventListener('click', function () { goStep(2); });
+
+      document.getElementById('backFromStep3').addEventListener('click', function () { goStep(2); });
+
+      document.getElementById('toStep4').addEventListener('click', function () {
+        if (!form.querySelector('#name').value.trim()) { form.querySelector('#name').reportValidity(); return; }
+        if (!form.querySelector('#email').value.trim()) { form.querySelector('#email').reportValidity(); return; }
+        if (!form.querySelector('#phone').value.trim()) { form.querySelector('#phone').reportValidity(); return; }
+        document.getElementById('formStatus').textContent = '';
+        fillSummary();
+        goStep(4);
+      });
+
+      document.getElementById('backFromStep4').addEventListener('click', function () { goStep(3); });
+
+      document.getElementById('confirmBookingBtn').addEventListener('click', function () {
+        fillSummary();
+        copySummaryToConfirmed();
+        bookingShell.hidden = true;
+        bookingSuccess.hidden = false;
+        bookingSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+
+      document.getElementById('resetBookingDemo').addEventListener('click', function () {
+        form.reset();
+        bookSlotInput.value = '';
+        document.querySelectorAll('#slotGrid .slot-btn').forEach(function (b) { b.classList.remove('is-selected'); });
+        document.getElementById('formStatus').textContent = '';
+        bookingSuccess.hidden = true;
+        bookingShell.hidden = false;
+        goStep(1);
+      });
+
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        var st = document.getElementById('formStatus');
-        st.textContent = 'Thank you. In production this enquiry would route to your team—in the demo, please call 0333 772 9655 or email admin@mymskclinic.co.uk.';
-        form.querySelector('#submitDemo').disabled = true;
       });
 
       document.getElementById('year').textContent = new Date().getFullYear();
