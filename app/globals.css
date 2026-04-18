@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+/* =============================================================================
+   MyMSK — dark-first design tokens (2026 premium clinical)
+   WCAG: aim AA for body (≥4.5:1), AAA where noted for large text.
+   ============================================================================= */
+
+:root {
+  /* ——— Brand — teal: clinical, distinct from SaaS purple/blue templates ——— */
+  --brand-400: #2dd4bf;
+  --brand-500: #14b8a6;
+  --brand-600: #0d9488;
+  --brand-700: #0f766e;
+  --brand-soft: color-mix(in srgb, var(--brand-500) 18%, transparent);
+
+  /* ——— Surfaces — void → elevated (studio spec) ——— */
+  --void: #050607;
+  --graphite: #0c0e10;
+  --canvas: #080a0a;
+  --surface: #0f1312;
+  --surface-elevated: #151a19;
+  --panel: #161c1a;
+  --surface-glass: color-mix(in srgb, var(--surface-elevated) 72%, transparent);
+
+  /* ——— Text ——— */
+  --ink: #f0f5f3;
+  --ink-muted: #b8c5c0;
+  --ink-subtle: #8a9892;
+
+  /* ——— Borders ——— */
+  --border: rgba(240, 245, 243, 0.09);
+  --border-strong: rgba(240, 245, 243, 0.14);
+  --focus-ring: var(--brand-400);
+
+  /* ——— Accent — reserved for links / secondary actions (muted cyan-blue) ——— */
+  --accent-500: #5eead4;
+  --accent-600: #2dd4bf;
+
+  /* ——— Semantic ——— */
+  --success: #34d399;
+  --warning: #fbbf24;
+  --danger: #f87171;
+
+  /* ——— Depth — soft, not neon ——— */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.45);
+  --shadow-glow-brand: 0 0 0 1px color-mix(in srgb, var(--brand-500) 25%, transparent);
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: clamp(1.875rem, 4.5vw, 3rem);
+  --text-display: clamp(2.75rem, 6.5vw, 4.25rem);
+
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.65;
+
+  --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 240ms;
+
+  --max-content: 72rem;
+  --header-h: 4rem;
+
+  --background: var(--canvas);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-void: var(--void);
+  --color-graphite: var(--graphite);
+  --color-panel: var(--panel);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-ink: var(--ink);
+  --color-muted: var(--ink-muted);
+  --color-subtle: var(--ink-subtle);
+  --color-brand: var(--brand-600);
+  --color-brand-hover: var(--brand-500);
+  --color-brand-foreground: #042f2e;
+  --color-brand-soft: var(--brand-soft);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent-500);
+  --color-accent-hover: var(--accent-600);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+
+  --shadow-card: var(--shadow-md);
+  --shadow-card-hover: var(--shadow-lg);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-tight), var(--font-inter), sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0.01ms;
+    --duration-normal: 0.01ms;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink-muted);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+}
+
+/* Mobile web: calmer tap flash, more “app-like” */
+button,
+[role="button"] {
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--brand-500) 22%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--brand-500) 35%, transparent);
+  color: var(--ink);
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+}
